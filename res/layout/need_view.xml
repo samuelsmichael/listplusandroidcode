@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:orientation="vertical"
+	android:layout_height="fill_parent">
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+		<TextView android:layout_width="79sp" android:layout_height="wrap_content"
+			android:text="@string/prompt_item_name" />
+
+		<AutoCompleteTextView android:id="@+id/need_item"
+			android:completionThreshold="1" 
+			android:layout_width="fill_parent" android:layout_height="wrap_content" />
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+		<TextView android:layout_width="78sp" android:layout_height="wrap_content"
+			android:text="@string/need_view_description_prompt" android:hint="@string/need_view_description_hint"
+			android:textColorHint="#44000000" />
+
+		<EditText android:id="@+id/need_view_description_id"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:textSize="12sp">
+		</EditText>
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_gravity="bottom">
+		<Button android:id="@+id/location_button_confirm" android_layout_gravity="bottom"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:text="@string/location_confirm">
+		</Button>
+		<Button android:id="@+id/location_button_cancel"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android_layout_gravity="bottom"
+			android:text="@string/location_cancel">
+		</Button>
+	</LinearLayout>	
+	<FrameLayout 
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	>
+		<TextView 
+			android:id="@+id/TextView01" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="@string/locations"
+			android:background="@drawable/title_bar_portrait"
+			android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000" android:shadowRadius="2.75"
+			>
+		</TextView>
+		<TextView
+			android:layout_width="fill_parent"
+			android:gravity="right"
+			android:layout_gravity="center_vertical"
+			android:paddingRight="10sp"
+			android:layout_height="wrap_content" android:text="@string/location_add_hint"
+			android:background="#00000000"
+			android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000" android:shadowRadius="2.75"
+			android:textColor="#99FFFFFF"
+			android:textSize="10sp"
+			>
+		</TextView>
+	</FrameLayout>
+
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		<ListView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:id="@android:id/list" />
+
+		<TextView android:id="@+id/android:empty"
+			android:layout_width="wrap_content" android:textSize="20sp"
+			android:textStyle="bold" android:textColor="#44666666"
+			android:layout_gravity="center" android:paddingTop="11dip"
+			android:layout_height="wrap_content" android:text="@string/no_locations" />
+		
+		<LinearLayout android:orientation="vertical" android:gravity="bottom"
+			android:layout_width="fill_parent" android:layout_height="fill_parent">
+			<Button android:id="@+id/needview_button_location"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/need_view_button_location">
+			</Button>
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

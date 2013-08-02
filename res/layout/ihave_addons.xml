@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+		<LinearLayout
+		  xmlns:android="http://schemas.android.com/apk/res/android"
+		  android:layout_marginTop="9dip"
+		  android:orientation="horizontal"
+		  android:layout_width="wrap_content"
+		  android:layout_height="wrap_content">
+				<ImageView android:id="@+id/AddOnImage" 
+					android:scaleType="fitStart"
+					android:adjustViewBounds="true"
+					android:layout_width="40dip"
+					android:layout_height="40dip"
+					android:paddingRight="1dip"
+				>
+				</ImageView>
+				<LinearLayout
+				  xmlns:android="http://schemas.android.com/apk/res/android"
+				  android:orientation="vertical"
+				  android:layout_width="wrap_content"
+				  android:layout_height="wrap_content">
+						<TextView android:id="@+id/AddOnTitle" 
+							android:textSize="16sp" android:textStyle="bold"
+							android:layout_width="wrap_content" 
+							android:layout_height="wrap_content">
+						</TextView>
+						<TextView android:id="@+id/AddOnDescription" 
+							android:textSize="13sp" android:textStyle="normal"
+							android:layout_width="210dip" 
+							android:layout_height="wrap_content">
+						</TextView>
+						<TextView android:id="@+id/AddOnFooter"
+							android:textColor="#00FF00"
+							android:textSize="16sp" android:textStyle="bold"
+							android:layout_width="wrap_content" 
+							android:layout_height="wrap_content">
+						</TextView>
+		</LinearLayout>		  
+		<ImageButton android:id="@+id/AddOnGet" 
+			android:scaleType="fitCenter"
+			android:layout_width="67dip"
+			android:layout_height="65dip"
+			android:adjustViewBounds="true"
+			android:layout_marginLeft="1dip"
+
+			>
+		</ImageButton>
+	</LinearLayout>
+	<EditText 
+		android:id="@+id/SuggestionBox" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:width="240dip"
+		android:height="180dip"
+		android:layout_marginTop="50dip" android:layout_gravity="center_horizontal"  
+		android:gravity="top|left"
+		>
+	</EditText>
+	<Button android:text="Suggestion Box"
+		android:width="160sp" android:layout_gravity="center_horizontal"  
+		android:id="@+id/SuggestionBoxButton" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content">
+	</Button>	
+</LinearLayout>

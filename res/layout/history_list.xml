@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  
+  
+	<LinearLayout android:layout_width="fill_parent"
+		android:orientation="horizontal" android:layout_height="wrap_content">
+			<TextView android:text="@string/fromdate" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<EditText android:textSize="12sp" android:id="@+id/history_from_date_edit" android:layout_width="90sp" android:layout_height="wrap_content"></EditText>	
+			<TextView android:text="@string/throughdate" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<EditText android:textSize="12sp" android:id="@+id/history_through_date_edit" android:layout_width="90sp" android:layout_height="wrap_content"></EditText>
+	  		<Button android:text="@string/go" android:id="@+id/history_buttongo" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+	</LinearLayout>
+  	<FrameLayout 
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+	>
+		<TextView 
+			android:id="@+id/TextView01" android:layout_width="fill_parent"
+			android:layout_height="15sp" android:text=""
+			android:background="@drawable/title_bar_portrait"
+			android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000" android:shadowRadius="2.75"
+			>
+		</TextView>
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="Date"
+			android:background="#00000000"
+			android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000" android:shadowRadius="2.75"
+			android:textColor="#99FFFFFF"
+			android:textSize="11sp"
+			>
+		</TextView>
+		<TextView
+			android:layout_width="fill_parent"
+			android:paddingLeft="64sp"
+			android:layout_height="wrap_content" android:text="Item"
+			android:background="#00000000"
+			android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000" android:shadowRadius="2.75"
+			android:textColor="#99FFFFFF"
+			android:textSize="11sp"
+			>
+		</TextView>
+		<TextView
+			android:layout_width="fill_parent"
+			android:paddingLeft="147sp"
+			android:layout_height="wrap_content" android:text="Location"
+			android:background="#00000000"
+			android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000" android:shadowRadius="2.75"
+			android:textColor="#99FFFFFF"
+			android:textSize="11sp"
+			>
+		</TextView>
+		<TextView
+			android:layout_width="fill_parent"
+			android:paddingLeft="220sp"
+			android:layout_height="wrap_content" android:text="By"
+			android:background="#00000000"
+			android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000" android:shadowRadius="2.75"
+			android:textColor="#99FFFFFF"
+			android:textSize="11sp"
+			>
+		</TextView>
+		<TextView
+			android:layout_width="fill_parent"
+			android:paddingLeft="253sp"
+			android:layout_height="wrap_content" android:text="Description"
+			android:background="#00000000"
+			android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000" android:shadowRadius="2.75"
+			android:textColor="#99FFFFFF"
+			android:textSize="11sp"
+			>
+		</TextView>
+	</FrameLayout>
+  
+   		<ListView
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:choiceMode="none"
+			android:dividerHeight="1sp"
+			android:id="@android:id/list">
+</ListView>
+
+</LinearLayout>

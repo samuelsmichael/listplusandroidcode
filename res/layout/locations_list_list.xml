@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:divider="#300"
+  android:paddingTop="7sp"
+  android:paddingBottom="7sp"
+
+  >
+		<TextView 
+			android:id="@+id/locationlist_name"
+			android:textSize="18sp"
+			android:textStyle="bold"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+		<TextView 
+			android:id="@+id/locationlist_address"
+			android:textSize="11sp"
+			android:textStyle="bold"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingLeft="5sp">
+		</TextView>
+		<TextView 
+			android:id="@+id/locationlist_phoneid_name"
+			android:textSize="1sp"
+			android:visibility="invisible"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>		
+ </LinearLayout>

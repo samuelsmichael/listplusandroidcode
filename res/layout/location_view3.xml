@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ScrollView02" android:layout_width="fill_parent"
+	android:layout_height="wrap_content">
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+			<LinearLayout android:id="@+id/LinearLayout01"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:orientation="horizontal">
+				<TextView android:layout_width="79sp"
+					android:layout_height="wrap_content" android:text="@string/location_title_prompt" />
+				<EditText android:id="@+id/location_title_id"
+					android:layout_width="fill_parent" android:layout_height="wrap_content">
+				</EditText>
+			</LinearLayout>
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+				<TextView android:layout_width="79sp"
+					android:layout_height="wrap_content" android:text="@string/company_name" />
+
+				<AutoCompleteTextView android:id="@+id/location_company"
+					android:textColor="#88000000" android:completionThreshold="1"
+					android:layout_width="fill_parent" android:layout_height="wrap_content" />
+			</LinearLayout>
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:gravity="bottom">
+				<Button android:id="@+id/location_button_confirm"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="@string/location_confirm">
+				</Button>
+				<Button android:id="@+id/location_button_cancel"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="@string/location_cancel">
+				</Button>
+			</LinearLayout>
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="wrap_content">
+				<TextView android:layout_width="wrap_content"
+					android:textStyle="bold" android:textSize="12sp"
+					android:layout_height="wrap_content" android:text="@string/gpscoordinates" />
+				<TextView android:layout_width="wrap_content"
+					android:textSize="12sp" android:paddingLeft="10dip"
+					android:layout_height="wrap_content" android:text="@string/latitude_label" />
+				<TextView android:layout_width="wrap_content"
+					android:textStyle="bold" android:textSize="12sp"
+					android:paddingLeft="3dip" android:layout_height="wrap_content"
+					android:id="@+id/location_view_latitude" />
+				<TextView android:layout_width="wrap_content"
+					android:textSize="12sp" android:paddingLeft="3dip"
+					android:layout_height="wrap_content" android:text="@string/longitude_label" />
+				<TextView android:layout_width="wrap_content"
+					android:textStyle="bold" android:textSize="12sp"
+					android:paddingLeft="3dip" android:layout_height="wrap_content"
+					android:id="@+id/location_view_longitude" />
+			</LinearLayout>
+			<TextView android:id="@+id/TextView01a"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:text="@string/establish_location" 
+				android:background="@drawable/title_bar_portrait"				
+				android:shadowRadius="2.75" android:textAppearance="@android:style/TextAppearance.WindowTitle"
+				android:shadowColor="#BB000000">
+			</TextView>
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:gravity="bottom">
+				<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+					android:orientation="vertical" android:layout_width="wrap_content"
+					android:layout_height="wrap_content">
+					<LinearLayout android:orientation="horizontal"
+						android:layout_width="fill_parent" android:layout_height="wrap_content"
+						android:gravity="bottom">
+						<Button android:id="@+id/buttonfileefromcurrentlocation"
+							android:layout_width="wrap_content" android:layout_height="wrap_content"
+							android:text="@string/location_fill_from_current_loc">
+						</Button>
+						<Button android:id="@+id/ButtonContacts"
+							android:layout_width="wrap_content" android:layout_height="wrap_content"
+							android:text="@string/location_fill_from_contacts">
+						</Button>
+					</LinearLayout>
+					<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+						android:orientation="vertical" android:layout_width="fill_parent"
+						android:layout_height="wrap_content">
+						<Button android:id="@+id/ButtonFillFromAddress"
+							android:layout_width="fill_parent" android:layout_height="fill_parent"
+							android:text="@string/location_fill_from_address">
+						</Button>
+					</LinearLayout>
+				</LinearLayout>
+
+				<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+					android:orientation="vertical" android:layout_width="wrap_content"
+					android:layout_height="wrap_content">
+					<EditText android:id="@+id/location_address_id"
+						android:textColor="#AA000000" android:layout_width="144sp"
+						android:layout_height="95sp" android:gravity="top|center"
+						android:textSize="12sp">
+					</EditText>
+				</LinearLayout>
+			</LinearLayout>
+			<TextView android:id="@+id/TextView01a"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:text="@string/location_needsatthislocation"
+				android:background="@drawable/title_bar_portrait"
+				android:shadowRadius="2.75" android:textAppearance="@android:style/TextAppearance.WindowTitle"
+				android:shadowColor="#BB000000">
+			</TextView>
+		</LinearLayout>
+
+			<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:orientation="vertical" android:layout_width="fill_parent"
+				android:layout_height="100sp">
+	
+				<ListView android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:id="@android:id/list" />
+	
+				<TextView android:id="@+id/android:empty"
+					android:layout_width="wrap_content" android:textSize="20sp"
+					android:textStyle="bold" android:textColor="#66888888"
+					android:layout_gravity="center" android:paddingTop="11dip"
+					android:layout_height="wrap_content" android:text="@string/no_needs" />
+			</LinearLayout>
+	</LinearLayout>
+</ScrollView>
+	

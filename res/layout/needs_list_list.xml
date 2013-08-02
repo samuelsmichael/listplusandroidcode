@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:orientation="vertical"  android:layout_height="wrap_content">
+   
+	<LinearLayout
+	  android:layout_width="fill_parent"
+	  android:orientation="vertical"  android:layout_height="wrap_content">
+		<LinearLayout
+		  android:layout_width="fill_parent"
+		  android:orientation="horizontal"  android:layout_height="wrap_content">
+			<TextView android:textSize="22sp" android:textStyle="bold" android:id="@+id/needs_list_list_itemname" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+			<TextView android:id="@+id/needs_list_list_needid" android:layout_width="1sp" android:layout_height="1sp"></TextView>
+			<TextView android:id="@+id/needs_list_list_phoneid" android:layout_width="1sp" android:layout_height="1sp"></TextView>
+			<TextView android:id="@+id/needs_list_list_address" android:layout_width="1sp" android:layout_height="1sp"></TextView>
+			<TextView android:textSize="10sp" 
+				android:paddingLeft="6sp" 
+				android:paddingRight="6sp" 
+				android:id="@+id/needs_list_list_description" 
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content">
+			</TextView>
+		</LinearLayout>
+		<LinearLayout
+		  android:layout_width="fill_parent"
+		  android:orientation="horizontal"  android:layout_height="wrap_content">
+			<TextView android:textSize="10sp" 
+				android:paddingLeft="6sp" 
+				android:paddingRight="6sp" 
+				android:id="@+id/needs_list_list_locations" 
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content">
+			</TextView>
+		 </LinearLayout>
+	</LinearLayout>
+</LinearLayout>

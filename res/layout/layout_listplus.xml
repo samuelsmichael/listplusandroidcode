@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ScrollView01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+<LinearLayout
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:orientation="vertical">
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:layout_gravity="center_horizontal">
+		<TextView android:text="INTELLIGENT REMINDER" android:gravity="center_horizontal"
+			android:layout_width="fill_parent" android:textSize="33sp"
+			android:typeface="serif" android:textStyle="bold|italic"
+			android:layout_height="wrap_content"></TextView>
+		<ImageView android:layout_width="48px"
+			android:layout_height="48px" android:layout_gravity="center_horizontal"
+			android:src="@drawable/launcher_icon">
+		</ImageView>
+		<TextView android:text="(c) MiBr Technologies"
+			android:gravity="center_horizontal" android:layout_width="fill_parent"
+			android:textSize="10sp" android:layout_height="wrap_content"></TextView>
+		<TextView android:text="v 4.13a" android:gravity="center_horizontal"
+			android:layout_width="fill_parent" android:textSize="12sp"
+			android:layout_height="wrap_content"></TextView>
+		<TextView android:text="June 7, 2013" android:gravity="center_horizontal"
+			android:layout_width="fill_parent" android:textSize="12sp"
+			android:layout_height="wrap_content"></TextView>
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="horizontal"
+			android:layout_gravity="center_horizontal"
+			android:gravity="center_horizontal"
+			android:layout_marginTop="9sp">
+			<TextView android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textSize="10sp"
+				android:textStyle="normal" android:text="Phone Id:"></TextView>
+			<TextView android:id="@+id/ListPlus_PhoneID"
+				android:layout_width="wrap_content" android:textSize="12sp" android:textStyle="bold"
+				android:paddingLeft="6sp" android:layout_height="wrap_content"></TextView>
+		</LinearLayout>
+	</LinearLayout>
+	<TextView android:id="@+id/TextView01a" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/troubleshootinglog"
+		android:layout_marginTop="8sp"
+		android:layout_marginBottom="6sp"
+		android:textSize="12sp" android:background="@drawable/title_bar_portrait"
+		android:shadowRadius="2.75" android:textAppearance="@android:style/TextAppearance.WindowTitle"
+		android:shadowColor="#BB000000">
+	</TextView>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="horizontal">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textSize="12sp"
+			android:textStyle="bold" android:text="Log file size:"></TextView>
+		<TextView android:id="@+id/ListPlus_LogFileSize"
+			android:paddingLeft="6sp" android:layout_width="wrap_content"
+			android:textSize="12sp" android:layout_height="wrap_content"></TextView>
+		<Button android:text="Clear Log" android:id="@+id/ListPlus_ButtonClearLog"
+			android:layout_marginLeft="6sp" android:layout_width="wrap_content"
+			android:height="52sp"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"></Button>
+		<Button android:text="@string/transmitlog" android:id="@+id/ListPlus_ButtonTransmitLog"
+			android:layout_marginLeft="3sp" android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"></Button>
+	</LinearLayout>
+	<TextView  android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="Neworking"
+		android:layout_marginTop="8sp"
+		android:layout_marginBottom="6sp"
+		android:textSize="12sp" android:background="@drawable/title_bar_portrait"
+		android:shadowRadius="2.75" android:textAppearance="@android:style/TextAppearance.WindowTitle"
+		android:shadowColor="#BB000000">
+	</TextView>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="horizontal">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textSize="12sp"
+			android:textStyle="bold" android:text="Manual overrides:"></TextView>
+		<Button android:text="Publish" android:id="@+id/ListPlus_ManualOutbound"
+			android:layout_marginLeft="50sp" android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="right"
+			android:layout_gravity="right"></Button>
+		<Button android:text="Receive" android:id="@+id/ListPlus_ManualInbound"
+			android:layout_marginLeft="3sp" android:layout_width="wrap_content"
+			android:gravity="right"
+			android:layout_height="wrap_content"
+			android:layout_gravity="right"></Button>
+	</LinearLayout>
+
+</LinearLayout>
+</ScrollView>
+

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:paddingBottom="10dip"
+  android:paddingLeft="10dip"
+  android:paddingRight="10dip"
+  >
+	<LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:orientation="horizontal"
+	  >
+		  <TextView  android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="I NEED" androidTextStyle="bold" androidTextSize="12sp"
+		  />
+		  <TextView android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="diapers" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  />
+		  <TextView android:paddingLeft="5dip"  android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="LOCATION" androidTextStyle="bold" androidTextSize="12sp"
+		  />
+		  <TextView android:paddingLeft="5dip"  android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="Safeway" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  />
+   </LinearLayout>
+	<LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:orientation="horizontal"
+	  >
+		  <TextView android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="I NEED" androidTextStyle="bold" androidTextSize="12sp" 
+		  />
+		  <TextView android:paddingLeft="5dip"  android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="print cartridge" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  />
+	</LinearLayout>
+	<LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:orientation="horizontal"
+	  android:paddingLeft="15dip"
+	  >
+		  <TextView  android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="DESCRIPTION" androidTextStyle="bold" androidTextSize="12sp"
+		  /> 
+		  <TextView  android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="hp 21" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  />
+	</LinearLayout>
+	<LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:orientation="horizontal"
+	  android:paddingLeft="15dip"
+	  >
+		  <TextView android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="LOCATION" androidTextStyle="bold" androidTextSize="12sp"
+		  />
+		  <TextView  android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="Walgreens" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  />
+		  <TextView  android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="OR" androidTextStyle="bold" androidTextSize="12sp"
+		  />
+		  <TextView  android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="OfficeMate" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  />
+   </LinearLayout>
+	<LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:orientation="horizontal"
+	  >
+		  <TextView  android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="TALK TO" androidTextStyle="bold" androidTextSize="12sp"
+		  />
+		  <TextView android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="bill smith" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  />
+		  <TextView android:paddingLeft="5dip"  android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="ABOUT" androidTextStyle="bold" androidTextSize="12sp"
+		  />
+		  <TextView android:paddingLeft="5dip"  android:layout_width="wrap_content"  android:layout_height="wrap_content"
+		  android:text="sales" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  />
+   </LinearLayout>
+	<LinearLayout
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:orientation="horizontal"
+	  android:paddingTop="6sp"
+	  >
+		<Button 
+			android:id="@+id/ineedvoicehelp2_ok" 
+			android:layout_weight="1"  android:layout_width="0dip" android:layout_height="wrap_content" android:text="Okay" /> 
+	  
+	</LinearLayout>  
+</LinearLayout>

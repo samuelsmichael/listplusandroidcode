@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/needs_notification_im_on_it" android:title="@string/needs_notification_imonit"/>
+	<item android:id="@+id/needs_notification_clear_need" android:title="@string/needs_notification_nolongerneedneed"/>
+	<item android:id="@+id/needs_notification_leave_need" android:title="@string/needs_notification_clearnotification"/>
+</menu>

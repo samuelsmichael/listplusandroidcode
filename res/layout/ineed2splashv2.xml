@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/ScrollView01lmnop2" 
+  android:layout_width="fill_parent"
+  android_padding="5sp"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:layout_gravity="center_horizontal">
+		<TextView android:text="Thank you for your interest in\nIntelligent Reminder" android:gravity="center_horizontal"
+			android:layout_width="fill_parent" android:textSize="14sp"
+			android:typeface="serif" android:textStyle="bold"
+			android:layout_height="wrap_content"></TextView>
+		<ImageView android:layout_width="48px"
+			android:layout_height="48px" android:layout_gravity="center_horizontal"
+			android:src="@drawable/launcher_icon">
+		</ImageView>
+		<TextView android:text="Your comments, complaints, and criticisms help us design the next release." android:gravity="center_horizontal"
+			android:layout_width="fill_parent" android:textSize="14sp"
+			android:layout_marginBottom="10sp"
+			android:typeface="serif" android:textStyle="italic"
+			android:layout_height="wrap_content"></TextView>
+	</LinearLayout>
+	<LinearLayout android:id="@+id/CreateDefaultValues"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:orientation="vertical"
+		>
+		<TextView android:id="@+id/TextView01a" android:layout_width="fill_parent"
+			android:layout_height="2sp" android:text=" "
+			android:paddingLeft="10sp"
+			android:paddingRight="10sp"
+			android:layout_marginTop="1sp"
+			android:layout_marginBottom="3sp"
+			android:textSize="2sp" android:background="@drawable/title_bar_portrait"
+			android:shadowRadius="1.75" android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#88000000">
+		</TextView>
+		<CheckBox 
+			android:text=" Create a sample set of Locations and Needs?" 
+			android:id="@+id/BuildDefaultValues"
+			android:checked="true" 
+			android:textSize="13sp"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content">
+		</CheckBox>
+		
+	</LinearLayout>
+</LinearLayout>

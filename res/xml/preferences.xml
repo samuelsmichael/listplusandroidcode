@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<PreferenceScreen
+	  xmlns:android="http://schemas.android.com/apk/res/android">
+		<PreferenceCategory
+			android:title="Notifications"
+		>
+			  <CheckBoxPreference
+			  	android:key="NotificationUseSound"
+			  	android:defaultValue="true"
+			  	android:title="Notifications Use Sound"
+			  	android:summary="Check this box if you want to receive an audible when you are notified."
+			  ></CheckBoxPreference>
+			  <CheckBoxPreference
+			  	android:defaultValue="true"
+			  	android:key="NotificationUseVibrate"
+			  	android:title="Notifications Vibrate"
+			  	android:summary="Check this box if you want your phone to vibrate when you are notified."
+			  ></CheckBoxPreference>
+			  <CheckBoxPreference
+			  	android:key="VoiceNotifications"
+			  	android:defaultValue="true"
+			  	android:title="@string/defaultvoicenotification_title"
+			  	android:summary="@string/defaultvoicenotification_summary"
+			  ></CheckBoxPreference>
+			  <CheckBoxPreference
+			  	android:key="PopupNotifications"
+			  	android:defaultValue="false"
+			  	android:title="@string/defaultpopupnotification_title"
+			  	android:summary="@string/defaultpopupnotification_summary"
+			  ></CheckBoxPreference>
+			  			  			  
+		</PreferenceCategory>
+		<PreferenceCategory
+			android:title="Locations"
+		>
+            
+    		<ListPreference
+	            android:key="LocationDistance"
+	            android:defaultValue="@string/default_value_list_preference"
+	            android:title="@string/title_list_preference"
+	            android:summary="@string/summary_list_preference"
+	            android:entries="@array/entries_list_preference"
+	            android:entryValues="@array/entryvalues_list_preference"
+	            android:dialogTitle="@string/dialog_title_list_preference" />
+			
+		</PreferenceCategory>
+		<PreferenceCategory android:title="@string/ListSharing"
+			android:summary="The networking of your lists only occurs with those people you've given your Phone ID to ... and then only if they've given you theirs.  This section is where indicate the Phone IDs given to you.  And you designate nicknames, as well. "
+			>
+			<EditTextPreference
+				android:dialogTitle="@string/networking_DialogTitlephoneid"
+				android:dialogMessage="@string/networking_describingphoneid"
+				android:key="Networking_PhoneIDs"
+				android:title="@string/Networking_PhoneIDPreferencesTitle"
+			>
+			</EditTextPreference>
+			
+			<EditTextPreference
+				android:dialogTitle="@string/networking_DialogTitleuserfriendlynames"
+				android:dialogMessage="@string/networking_describinguserfriendlyname"
+				android:key="Networking_UserFriendlyNames"
+				android:title="@string/Networking_UserFriendlyPreferencesTitle"
+			>
+			</EditTextPreference>
+			  <CheckBoxPreference
+			  	android:key="Networking_Outbound_Enabled"
+			  	android:defaultValue="false"
+			  	android:title="Enable Outbound Networking"
+			  	android:summary="You can turn off and on the automatic outbound flow of your List here."
+			  ></CheckBoxPreference>
+			  <CheckBoxPreference
+			  	android:defaultValue="false"
+			  	android:key="Networking_Inbound_Enabled"
+			  	android:title="Enable Inbound Networking"
+			  	android:summary="You can turn off and on the automatic inbound flow of other peoples' Lists here."
+			  ></CheckBoxPreference>
+		</PreferenceCategory>
+		<PreferenceCategory android:title="Misc">
+			  <CheckBoxPreference
+			  	android:key="AutoStartOnBoot"
+			  	android:defaultValue="true"
+			  	android:title="@string/defaultstartonreboot_title_list_preference"
+			  	android:summary="@string/startonreboot_summary_list_preference"
+			  ></CheckBoxPreference>
+		    <ListPreference android:key="GPSFrequency"
+				android:defaultValue="@string/default_gpsfrequency_value"
+				android:title="@string/defaultgpsfrequency_title_list_preference"
+				android:summary="@string/gpsfrequency_summary_list_preference"
+				android:entries="@array/gps_list_preference" 
+				android:entryValues="@array/gpsvalues_list_preference"
+				android:dialogTitle="@string/gps_dialog_title_list_preference" />
+		    <ListPreference
+		            android:key="LoggingLevel"
+		            android:defaultValue="@string/default_logginglevel_value"
+		            android:title="@string/defaultlogging_title_list_preference"
+		            android:summary="@string/logging_summary_list_preference"
+		            android:entries="@array/logging_preferences"
+		            android:entryValues="@array/loggingvalues_preferences"
+		            android:dialogTitle="@string/logging_dialog_title_list_preference" />
+		</PreferenceCategory>
+</PreferenceScreen>
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gps_list_preference">
+        <item>Most frequent</item>
+        <item>More frequent</item>
+        <item>Medium</item>  
+        <item>Less frequent</item>  
+        <item>Least frequent</item>  
+    </string-array>
+
+    <!-- Used in app/menu examples -->
+    <string-array name="gpsvalues_list_preference">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>  
+        <item>4</item>  
+        <item>5</item>  
+    </string-array>
+	
+    <string-array name="entries_list_preference">
+        <item>Pinpoint</item>
+        <item>Fine</item>
+        <item>Medium</item>  
+        <item>Coarse</item>  
+    </string-array>
+
+    <!-- Used in app/menu examples -->
+    <string-array name="entryvalues_list_preference">
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>  
+        <item>500</item>  
+    </string-array>
+    <string-array name="logging_preferences">
+    	<item>Log All Messages</item>
+    	<item>Notification Messages</item>
+    	<item>Critical Messages</item>
+    	<item>Turn Off Logging</item>
+    </string-array>
+    <string-array name="loggingvalues_preferences">
+    	<item>0</item>
+    	<item>1</item>
+    	<item>2</item>
+    	<item>3</item>
+    </string-array>
+<string-array name="ihaveneeds_sorts">
+		<item>Alphabetic by Need</item>
+		<item>Alphabetic by Location</item>
+		<item>Location Proximity</item>
+</string-array>
+<string-array name="ihavelocations_sorts">
+		<item>Alphabetic by Location</item>
+		<item>Proximity</item>
+</string-array>
+</resources>

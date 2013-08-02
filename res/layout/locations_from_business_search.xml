@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ScrollView01" 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:orientation="vertical"
+  android:layout_height="wrap_content">
+  
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+		<TextView android:layout_width="99sp"
+			android:layout_height="wrap_content" android:text="Business name" />
+
+		<AutoCompleteTextView android:id="@+id/location_business"
+			android:completionThreshold="1" 
+			android:layout_width="fill_parent" android:layout_height="wrap_content" />
+
+	</LinearLayout>
+	<TextView android:id="@+id/TextView01" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="Search near criteria (Supply City and State  or  Zip)"
+		android:background="@drawable/title_bar_portrait"
+		android:textAppearance="@android:style/TextAppearance.WindowTitle"
+		android:shadowColor="#BB000000" android:shadowRadius="2.75">
+	</TextView>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TextView android:layout_width="99sp"
+			android:layout_height="wrap_content" android:textStyle="bold" android:text="Please supply" />
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="City" android:paddingRight="15sp" />
+
+		<EditText android:id="@+id/location_near_city" android:layout_width="fill_parent" android:layout_height="wrap_content">
+		</EditText>
+
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TextView android:layout_width="wrap_content" android:paddingLeft="25sp" 
+			android:layout_height="wrap_content" android:text="and" />
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+		<TextView android:layout_width="wrap_content" android:paddingRight="5sp"
+			android:layout_height="wrap_content" android:text="State" />
+
+		<EditText android:id="@+id/location_near_state" android:layout_width="fill_parent" android:layout_height="wrap_content">
+		</EditText>
+
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TextView android:layout_width="99sp"
+			android:layout_height="wrap_content" android:textStyle="bold" android:text="and/or" />
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+		<TextView android:layout_width="wrap_content" android:paddingRight="5sp"
+			android:layout_height="wrap_content" android:text="Zip" />
+
+		<EditText android:id="@+id/location_near_zip" android:layout_width="100sp" android:layout_height="wrap_content">
+		</EditText>
+
+	</LinearLayout>
+  
+	<TextView android:id="@+id/TextView01" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text=""
+		android:background="@drawable/title_bar_portrait"
+		android:textAppearance="@android:style/TextAppearance.WindowTitle"
+		android:shadowColor="#BB000000" android:shadowRadius="2.75">
+	</TextView>
+  
+  <LinearLayout
+  	android:orientation="horizontal"
+  	android:layout_width="wrap_content"
+  	android:layout_height="wrap_content"
+  >
+	<Button android:id="@+id/location_button_getbusinesses"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:text="@string/location_getbusinesses">
+	</Button>
+	<Button android:id="@+id/location_button_getbusinesses_cancel"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:text="Cancel">
+	</Button>
+	
+  </LinearLayout>
+  
+</LinearLayout>
+
+</ScrollView>

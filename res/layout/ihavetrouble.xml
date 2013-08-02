@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ScrollView01" android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<TextView android:textSize="14pt"
+			android:text="If you experience a halt or lock-up please help us resolve the problem by doing the following:"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+		</TextView>
+
+
+
+		<TextView android:paddingLeft="24sp" android:textSize="12pt"
+			android:text="Step 1 -- Set Logging Filter to Log All Messages"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+		</TextView>
+		<TextView android:paddingLeft="44sp" android:textSize="11pt"
+			android:text="-- Press menu" android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		</TextView>
+		<TextView android:paddingLeft="44sp" android:textSize="11pt"
+			android:text="-- Press Preferences" android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		</TextView>
+		<TextView android:paddingLeft="44sp" android:textSize="11pt"
+			android:text="-- Scroll to bottom (Logging Filter)" android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		</TextView>
+		<TextView android:paddingLeft="24sp" android:textSize="12pt"
+			android:text="Step 2 -- Re-create the problem on your phone."
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+		</TextView>
+		<TextView android:paddingLeft="24sp" android:textSize="12pt"
+			android:text="Step 3 -- Send Log to MiBr." android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		</TextView>
+		<TextView android:paddingLeft="44sp" android:textSize="11pt"
+			android:text="-- Press System tab" android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		</TextView>
+		<TextView android:paddingLeft="44sp" android:textSize="11pt"
+			android:text="-- Press Send Log to MiBr" android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		</TextView>
+		<TextView android:textSize="13pt"
+			android:text="Thank you very much!"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+		</TextView>
+	</LinearLayout>
+</ScrollView>

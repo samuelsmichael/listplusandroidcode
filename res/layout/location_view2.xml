@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ScrollView01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+
+
+<LinearLayout 
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:orientation="vertical">
+	<LinearLayout android:id="@+id/LinearLayout01"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<TextView android:layout_width="79sp" android:layout_height="wrap_content"
+			android:text="@string/location_title_prompt" />		
+		<EditText android:id="@+id/location_title_id" android:layout_width="fill_parent" 
+			android:layout_height="wrap_content">
+		</EditText>
+	</LinearLayout>
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+
+
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+			<TextView android:layout_width="79sp"
+				android:layout_height="wrap_content" android:text="@string/company_name" />
+
+			<AutoCompleteTextView android:id="@+id/location_company"
+				android:textColor="#44000000"
+				android:completionThreshold="1" 
+				android:layout_width="fill_parent" android:layout_height="wrap_content" />
+
+		</LinearLayout>
+
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:gravity="bottom">
+			<Button android:id="@+id/location_button_confirm"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/location_confirm">
+			</Button>
+			<Button android:id="@+id/location_button_cancel"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/location_cancel">
+			</Button>
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+	<TextView android:id="@+id/TextView01a" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="@string/gpscoordinates"
+			android:background="@drawable/title_bar_portrait"
+			android:shadowRadius="2.75" android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000">
+		</TextView>
+	
+</LinearLayout>
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+				<TextView android:layout_width="79sp"
+					android:layout_height="wrap_content" android:text="@string/latitude_label" />
+				<EditText android:id="@+id/location_latitude_id" android:layout_width="134sp" android:layout_height="wrap_content">
+				</EditText>
+
+				
+			</LinearLayout>
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+				<TextView android:layout_width="79sp"
+					android:layout_height="wrap_content" android:text="@string/longitude_label" />
+
+				<EditText android:id="@+id/location_longitude_id"
+					android:layout_width="134sp" android:layout_height="wrap_content">
+				</EditText>
+			</LinearLayout> 
+		</LinearLayout>
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="wrap_content" android:layout_height="fill_parent">
+			<Button android:id="@+id/buttonfileefromcurrentlocation"
+				android:layout_width="fill_parent" android:layout_height="fill_parent"
+				android:text="@string/location_fill_from_current_loc">
+			</Button>
+		</LinearLayout>
+	</LinearLayout>
+
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+				<TextView android:layout_width="79sp"
+					android:layout_height="wrap_content" android:text="@string/notificationdx_label" />
+
+				<EditText android:id="@+id/location_notificationdx_id"
+					android:layout_width="134sp" android:layout_height="wrap_content">
+				</EditText>
+				<TextView android:layout_width="wrap_content" android:paddingLeft="4sp"
+					android:layout_height="wrap_content" android:text="@string/meters" />
+			</LinearLayout> 
+
+	<TextView android:id="@+id/TextView01" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/address"
+		android:background="@drawable/title_bar_portrait"
+		android:textAppearance="@android:style/TextAppearance.WindowTitle"
+		android:shadowColor="#BB000000" android:shadowRadius="2.75">
+	</TextView>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+		<TextView android:layout_width="78sp" android:layout_height="wrap_content"
+			android:text="@string/address_label" />
+
+		<EditText android:id="@+id/location_address_id" android:textColor="#44000000"
+			android:layout_width="134sp" android:layout_height="95sp"
+			android:textSize="12sp">
+		</EditText>
+		<Button android:id="@+id/ButtonFillFromAddress"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:text="@string/location_fill_from_address">
+		</Button>
+
+	</LinearLayout>
+	<TextView android:id="@+id/TextView31" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="Select from Contacts"
+		android:background="@drawable/title_bar_portrait"
+		android:textAppearance="@android:style/TextAppearance.WindowTitle"
+		android:shadowColor="#BB000000" android:shadowRadius="2.75">
+	</TextView>
+		<Button android:id="@+id/ButtonContacts"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:text="@string/location_fill_from_contacts">
+		</Button>
+</LinearLayout>
+</ScrollView>

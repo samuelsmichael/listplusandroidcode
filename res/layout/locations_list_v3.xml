@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+- 		<RelativeLayout 
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:id="@+id/top_control_barl">
+			<Spinner android:id="@+id/sort_byl" android:layout_width="fill_parent" android:layout_height="wrap_content" 
+					android:entries="@array/ihavelocations_sorts" />
+		</RelativeLayout> 
+		<LinearLayout android:id="@+id/bottom_control_barl" android:layout_width="fill_parent" 
+				android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+  				<Button 
+	  				android:id="@+id/ineed_createlocation" 
+  					android:layout_weight="1" android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Location keying \nin manually" /> 
+  				<Button 
+	  				android:id="@+id/ineed_createlocationviavoice" 
+  					android:layout_weight="1" android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Location \nvia voice" /> 
+  		</LinearLayout>
+	 		<ListView android:id="@android:id/list" android:layout_width="fill_parent" android:layout_height="0dip" 
+	  			android:choiceMode="multipleChoice" android:layout_above="@id/bottom_control_barl" android:layout_below="@id/top_control_barl"
+	  		/> 
+  		<TextView android:id="@android:id/empty" android:layout_width="wrap_content" android:layout_height="wrap_content" 
+  			android:text="@string/empty_list" android:layout_below="@id/top_control_barl" 
+  			android:layout_above="@id/bottom_control_barl" /> 	  		
+</RelativeLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  
+	<item android:id="@+id/register_menu" android:title="@string/register"
+		  android:icon="@android:drawable/ic_menu_manage">
+	</item>
+  	<item android:id="@+id/preferences_menu" android:title="@string/menu_application_preferences"
+		  android:icon="@android:drawable/ic_menu_preferences">
+	</item>
+	<item android:id="@+id/support_menu" android:title="Support"
+		  android:icon="@drawable/ic_menu_help2">
+	</item>  
+  
+</menu>

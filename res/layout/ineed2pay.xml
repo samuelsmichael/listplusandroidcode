@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ScrollView02" android:layout_width="fill_parent"
+	android:layout_height="wrap_content">
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+		<TextView android:id="@+id/TextView01a" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="@string/securely_pay"
+			android:background="@drawable/title_bar_portrait" android:shadowRadius="2.75"
+			android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000">
+		</TextView>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="@string/ineed2pay_ccnbr"
+				android:layout_width="122sp" android:layout_height="wrap_content"></TextView>
+			<EditText android:id="@+id/INeedToPayCCNbr"
+				android:layout_width="300sp" android:layout_height="wrap_content"></EditText>
+		</LinearLayout>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="@string/ineed2pay_expmo"
+				android:layout_width="122sp" android:layout_height="wrap_content"></TextView>
+			<EditText android:id="@+id/INeedToPayExpirationMM"
+				android:layout_width="45sp" android:layout_height="wrap_content"></EditText>
+		</LinearLayout>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="@string/ineed2pay_expyear"
+				android:layout_width="122sp" android:layout_height="wrap_content"></TextView>
+			<EditText android:id="@+id/INeedToPayExpirationYYYY"
+				android:layout_width="70sp" android:layout_height="wrap_content"></EditText>
+			<TextView android:text="@string/ineed2pay_expyear_example"
+				android:textSize="6pt" android:layout_width="122sp"
+				android:layout_height="wrap_content"></TextView>
+		</LinearLayout>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="@string/ineed2pay_ccid"
+				android:layout_width="122sp" android:layout_height="wrap_content"></TextView>
+			<EditText android:id="@+id/INeedToPayccid"
+				android:layout_width="55sp" android:layout_height="wrap_content"></EditText>
+		</LinearLayout>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="@string/ineed2pay_nameoncard"
+				android:layout_width="122sp" android:layout_height="wrap_content"></TextView>
+			<EditText android:id="@+id/INeedToPayNameOnCard"
+				android:layout_width="300sp" android:layout_height="wrap_content"></EditText>
+		</LinearLayout>
+		<TextView android:id="@+id/TextView01a" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="@string/billing_info"
+			android:background="@drawable/title_bar_portrait" android:shadowRadius="2.75"
+			android:textAppearance="@android:style/TextAppearance.WindowTitle"
+			android:shadowColor="#BB000000">
+		</TextView>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="@string/ineed2pay_address"
+				android:layout_width="122sp" android:layout_height="wrap_content"></TextView>
+			<EditText android:id="@+id/INeedToPayAddress"
+				android:layout_width="300sp" android:layout_height="wrap_content"></EditText>
+		</LinearLayout>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="@string/ineed2pay_city"
+				android:layout_width="122sp" android:layout_height="wrap_content"></TextView>
+			<EditText android:id="@+id/INeedToPayCity"
+				android:layout_width="300sp" android:layout_height="wrap_content"></EditText>
+		</LinearLayout>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="@string/ineed2pay_state"
+				android:layout_width="122sp" android:layout_height="wrap_content"></TextView>
+			<EditText android:id="@+id/INeedToPayState"
+				android:layout_width="55sp" android:layout_height="wrap_content"></EditText>
+		</LinearLayout>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="@string/ineed2pay_postalcode"
+				android:layout_width="122sp" android:layout_height="wrap_content"></TextView>
+			<EditText android:id="@+id/INeedToPayPostalCode"
+				android:layout_width="150sp" android:layout_height="wrap_content"></EditText>
+		</LinearLayout>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<TextView android:text="@string/ineed2pay_country"
+				android:layout_width="122sp" android:layout_height="wrap_content"></TextView>
+			<EditText android:id="@+id/INeedToPayCountry"
+				android:layout_width="150sp" android:layout_height="wrap_content"></EditText>
+		</LinearLayout>
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			<Button android:id="@+id/ineed2pay_button_confirm"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/location_confirm">
+			</Button>
+			<Button android:id="@+id/ineed2pay_button_cancel"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/location_cancel">
+			</Button>
+	
+		</LinearLayout>
+	
+	</LinearLayout>
+</ScrollView>

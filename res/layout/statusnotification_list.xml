@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:paddingTop="14sp"
+  android:paddingBottom="14sp"
+  android:orientation="horizontal">
+		<LinearLayout 
+			android:layout_width="wrap_content"
+			android:orientation="horizontal"
+			android:layout_height="wrap_content">		
+			<TextView 
+				android:textSize="1sp"
+				android:width="1sp"
+				android:textColor="#000"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/notification_phoneid_name"
+			>
+			</TextView>
+			<TextView 
+				android:textSize="20sp"
+				android:textStyle="bold"
+				android:textColor="#bbb"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"				
+				android:id="@+id/notification_item_name"
+			>
+			</TextView>
+			<TextView 
+				android:id="@+id/notification_item_desc"
+				android:textSize="16sp"
+				android:textStyle="normal"
+				android:layout_gravity="center_vertical"				
+				android:textColor="#888"
+				android:layout_width="wrap_content"
+				android:paddingLeft="12sp"
+				android:layout_height="wrap_content">
+			</TextView>
+		</LinearLayout>	
+</LinearLayout>

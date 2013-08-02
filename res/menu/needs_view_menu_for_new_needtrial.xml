@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/register_menu" android:title="@string/register"
+		  android:icon="@android:drawable/ic_menu_manage">
+	</item>
+	<item android:id="@+id/need_addlocation" android:title="@string/need_menu_addlocation"
+		  android:icon="@android:drawable/ic_menu_add">
+	</item>
+	<item android:id="@+id/need_menu_search_location" android:title="@string/need_menu_search_location"
+		  android:icon="@android:drawable/ic_menu_search">
+	</item>
+	<item android:id="@+id/need_addnewlocation" android:title="@string/need_menu_newlocation"
+		  android:icon="@android:drawable/ic_menu_add">
+	</item>
+
+</menu>

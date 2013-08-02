@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/need_search_location_root" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:orientation="vertical">
+
+	<TextView android:layout_width="fill_parent"
+		android:id="@+id/need_search_location_screenheading"
+		android:layout_height="wrap_content" android:text="@string/search_location_screen_heading"
+		android:textSize="12sp" />
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="horizontal">
+		<TextView android:layout_width="79sp" android:layout_height="wrap_content"
+			android:text="@string/prompt_location_name" />
+		<AutoCompleteTextView android:id="@+id/need_location_item"
+			android:completionThreshold="1" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" />
+	</LinearLayout>
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<Button android:id="@+id/search_location_button_confirm"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical" android:text="@string/location_confirm">
+		</Button>
+		<Button android:id="@+id/search_location_button_cancel"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical" android:text="@string/location_cancel">
+		</Button>
+	</LinearLayout>
+
+</LinearLayout>
