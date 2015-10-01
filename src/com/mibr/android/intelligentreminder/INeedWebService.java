@@ -79,14 +79,14 @@ public class INeedWebService extends Service {
 					public void run() {
 						transmitLog(clearWhenDone);
 					}
-				}).run();
+				}).start();
 			if(intent.getAction().equals("Outbound")) {
 				final boolean doingmanually=intent.getBooleanExtra("doingmanually", false);
 				new Thread(new Runnable(){
 					public void run() {
 						outbound(doingmanually);
 					}
-				}).run();
+				}).start();
 			}
 			
 			if(intent.getAction().equals("adpress")) {
@@ -96,7 +96,7 @@ public class INeedWebService extends Service {
 						public void run() {
 							adpress(adnbr);
 						}
-					}).run();
+					}).start();
 				}
 			}
 	
@@ -108,7 +108,7 @@ public class INeedWebService extends Service {
 						public void run() {
 							adview(adnbr,phoneid);
 						}
-					}).run();
+					}).start();
 				}
 			}
 			
@@ -119,14 +119,14 @@ public class INeedWebService extends Service {
 					public void run() {
 						inbound(doingmanually);
 					}
-				}).run();
+				}).start();
 			}
 			if(intent.getAction().equals("CheckStatus")) {
 				new Thread(new Runnable(){
 					public void run() {
 						checkStatus();
 					}
-				}).run();
+				}).start();
 			}
 			if(intent.getAction().equals("Register")) {
 				final String ccNbr=intent.getStringExtra("ccNbr");
@@ -145,7 +145,7 @@ public class INeedWebService extends Service {
 						register(ccNbr,  expMonth,  expYear,  ccId,  nameOnCard, ccCardType,
 								address,city,state,postalCode,country);
 					}
-				}).run();
+				}).start();
 			}
 			if(intent.getAction().equals("DeleteOnBehalfOf")) {
 				final long foreignNeedId=intent.getLongExtra("foreignneedid",-1);
@@ -156,7 +156,7 @@ public class INeedWebService extends Service {
 					public void run() {
 						deleteOnBehalfOf(foreignNeedId, onBehalfOfPhoneId, localPhoneId, foreignLocationId );
 					}
-				}).run();
+				}).start();
 			}
 			if(intent.getAction().equals("BusinessLocation")) {
 				final String jdBusiness=intent.getStringExtra("Business");
@@ -167,7 +167,7 @@ public class INeedWebService extends Service {
 					public void run() {
 						businessLocation(jdBusiness, jdCity,jdState,jdZip);
 					}
-				}).run();
+				}).start();
 			}
 		}
 	}
@@ -216,6 +216,9 @@ public class INeedWebService extends Service {
 	private boolean _weredone=false;
 	private String _str="";
 	private String _swk="";
+	
+	
+	
 	private void businessLocation(String business, String city, String state, String zip) {
 		try {
 			ArrayList<ArrayList<String>> jdLocations=new BusinessFinder(this,null).businessLocation(business,city,state,zip,null,null);

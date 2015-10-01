@@ -20,16 +20,15 @@
 
 			<LinearLayout android:layout_width="fill_parent" 
 				android:layout_height="wrap_content" android:orientation="horizontal">
-	  				<Button 
-		  				android:id="@+id/ineed_createneed" 
-		  				android:layout_weight="1"  android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Need keying \n in Manually" /> 
-	  				<Button 
-	  					android:id="@+id/ineed_createneedusingvoice" 
-	  					android:layout_weight="1"  android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Need via \nVoice Commands" /> 
-	  				<Button 
-	  					android:id="@+id/ineed_createneedusingvoicejprompts" 
-	  					android:layout_weight="1"  
-	  					android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Need via \nVoice Prompts" /> 
+  				<Button 
+	  				android:id="@+id/ineed_createneed" 
+	  				android:layout_weight="1"  android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Need\nManually" /> 
+  				<Button 
+  					android:id="@+id/ineed_createneedusingvoice" 
+  					android:layout_weight="1"  android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Need\nVoice" /> 
+  				<Button 
+  					android:id="@+id/ineed_createneedusingvoicejprompts" 
+  					android:layout_weight="1"  android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Need\nPrompts" /> 
 	  		</LinearLayout>
 	  		<Button
 	  			android:layout_width="fill_parent"

@@ -1,5 +1,8 @@
 package com.mibr.android.intelligentreminder;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 import com.mibr.android.intelligentreminder.R;
 
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import android.app.ListActivity;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.graphics.drawable.BitmapDrawable;
@@ -42,13 +46,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
-public class IHaveLocations extends ListActivity {
+public class IHaveLocations extends ListActivity implements
+		GooglePlayServicesClient.ConnectionCallbacks,
+		GooglePlayServicesClient.OnConnectionFailedListener{
 	private INeedDbAdapter mDbAdapter = null;
 	private SimpleCursorAdapter mSimpleCursorAdapter = null;
 	private String _doingLocationCompany = null;
 	private TextView _titleOfCompany = null;
 	private Button _addLocationManually=null;
 	private Button _addLocationViaVoice=null;
+	private Button _addLocationViaMap=null;
 	private Button buttonAd;
 	private TextToSpeech mTts;
 	private static final int MY_DATA_CHECK_CODE = 32229000;
@@ -60,6 +67,7 @@ public class IHaveLocations extends ListActivity {
 	private static final int SAYOKAYORRETRYLOCATIONADDRESS = 32200006;
 	private static final int SAYOKAYORRETRYLOCATIONBUSINESSNAME = 32200008;
 	private Spinner sortOrder=null;
+	private Location _remLoc;
 	
     private String remPrompt;
     private LocationBuilderII mLocBuilder=null;
@@ -67,6 +75,7 @@ public class IHaveLocations extends ListActivity {
     private String savLocationAddress;
     private String savLocationBusinessName;
 	private int cntRetries=0;
+    private LocationClient mLocationClient;
 	private static int jdCurrentSortOrder=0;
 	private LocationManager getLocationManager() {
 		return INeedToo.mSingleton.getLocationManager();
@@ -117,8 +126,11 @@ public class IHaveLocations extends ListActivity {
 	}
 
 	private int _klugeCntCursorItems;
-	private Location _remLoc;
+
 	private void doOnCreate(Bundle savedInstanceState) {
+        mLocationClient = new LocationClient(this, this, this);		
+        mLocationClient.connect();
+
 		if(INeedToo.mSingleton.doViewCount) {
 			final Timer jdTimer = new Timer("ViewCountingLocations");
 			jdTimer.schedule(new TimerTask() {
@@ -362,6 +374,8 @@ public class IHaveLocations extends ListActivity {
 		}
 		_addLocationManually = (Button) findViewById(R.id.ineed_createlocation);
 		_addLocationViaVoice = (Button) findViewById(R.id.ineed_createlocationviavoice);
+		_addLocationViaMap = (Button) findViewById(R.id.ineed_createlocationviamap);
+		
 		if(_addLocationManually != null) {
 			_addLocationManually.setOnClickListener(new View.OnClickListener() {
 				
@@ -386,7 +400,22 @@ public class IHaveLocations extends ListActivity {
 				}
 			});
 		}
-		sortOrder.setSelection(jdCurrentSortOrder);
+		if(_addLocationViaMap != null) {
+			_addLocationViaMap.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					try {
+						IHaveLocations.this.finish();
+						Intent intent=new Intent(IHaveLocations.this,LocationsViaMap.class);
+						intent.putExtra("lat",_remLoc.getLatitude()).
+								putExtra("long",_remLoc.getLongitude());
+						startActivity(intent);
+						IHaveLocations.this.finish();
+					} catch (Exception e) {}
+				}
+			});
+		}		sortOrder.setSelection(jdCurrentSortOrder);
 		sortOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 			@Override
@@ -419,6 +448,23 @@ public class IHaveLocations extends ListActivity {
 		checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(checkIntent,MY_DATA_CHECK_CODE);
 	}
+	
+	@Override
+	public void onConnected(Bundle arg0) {
+		_remLoc=mLocationClient.getLastLocation();
+        mLocationClient.disconnect();
+	}
+
+
+	@Override
+	public void onDisconnected() {
+	}	
+
+	@Override
+	public void onConnectionFailed(ConnectionResult connectionResult) {
+	}		
+	
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode==MY_DATA_CHECK_CODE) {
@@ -512,21 +558,7 @@ public class IHaveLocations extends ListActivity {
 						if(matches.get(i).toLowerCase().trim().equals("business")) {
 							Boolean didit=false;
 							doPrompting("Searching the internet",null,-1);
-							cntRetries=0;
-							while (cntRetries < 4) {
-								if(mLocBuilder.searchInternet(getApplicationContext(),getLocationManager())) {
-									mLocBuilder.flush();
-									doPrompting("Success!",null,-1);
-									didit=true;
-									break;
-								}
-								cntRetries++;
-							}
-							if(!didit) {
-								doPrompting("Failed trying to get business location.  Do you want to try again?.","Say, yes, or no",SAYOKAYORRETRYLOCATIONBUSINESSNAME);
-							} else {
-								refreshList();
-							}
+							mLocBuilder.searchInternet(this,getLocationManager());
 						} else {
 							if(matches.get(i).toLowerCase().trim().equals("address")) {
 								doPrompting(null,"Say Location address",SAYLOCATIONADDRESS);
@@ -549,13 +581,7 @@ public class IHaveLocations extends ListActivity {
 				for(int i=0;i<matches.size();i++) {
 					if(matches.get(i).toLowerCase().trim().equals("yes")) {
 						doPrompting("Searching internet",null,-1);
-						if(mLocBuilder.searchInternet(getApplicationContext(),getLocationManager())) {
-							mLocBuilder.flush();
-							doPrompting("Success!",null,-1);
-							refreshList();
-						} else {
-							doPrompting("Failed trying to get business location.  Do you want to try again?.","Say, yes, or no",SAYOKAYORRETRYLOCATIONBUSINESSNAME);
-						}
+						mLocBuilder.searchInternet(this,getLocationManager());
 					} else {
 					}
 					break;
@@ -633,6 +659,15 @@ public class IHaveLocations extends ListActivity {
 				}
 			}
 		}		
+	}
+	public void searchingTheInternetCallback(boolean okay) {
+		if(okay) {
+			mLocBuilder.flush();
+			doPrompting("Success!",null,-1);
+			refreshList();	
+		} else {
+			doPrompting("Failed trying to get business location.  Do you want to try again?.","Say, yes, or no",SAYOKAYORRETRYLOCATIONBUSINESSNAME);			
+		}
 	}
 	private void refreshList() {
 		Intent i2 = new Intent(IHaveLocations.this, INeedToo.class);

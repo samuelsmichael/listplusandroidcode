@@ -63,6 +63,7 @@ public class IHaveHistory extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle("Alert History");
 /*bbhbb 2011-03-26*/		Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler(""));
 		setContentView(R.layout.history_list);
 		Button go = (Button) findViewById(R.id.history_buttongo);

@@ -1,59 +1,43 @@
 package com.mibr.android.intelligentreminder;
 
 
-
-
-
-
-
 import com.mibr.android.intelligentreminder.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-import android.R.id;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
-import android.graphics.Color;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -62,6 +46,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class IHaveNeeds extends ListActivity implements RespondsToNeedByVoiceProgress {
+	private int mHeight;
 	private SimpleCursorAdapter mSimpleCursorAdapter;
 	private boolean amDoing2ndDialog;
 	private long amDoing2ndDialogId;
@@ -90,7 +75,7 @@ public class IHaveNeeds extends ListActivity implements RespondsToNeedByVoicePro
 	private TextToSpeech mTts;
 	private String saveDescription;
 	private static int jdCurrentSortOrder=0;
-
+	
 	private LocationManager getLocationManager() {
 		return INeedToo.mSingleton.getLocationManager();
 //		if(mLocationManager==null) {
@@ -606,7 +591,7 @@ public class IHaveNeeds extends ListActivity implements RespondsToNeedByVoicePro
 */
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
+	
 	private ArrayList _stuff;
 	public void callbackFromVoice(Boolean succeeded, Boolean isContact) {
 		if(succeeded) {
@@ -649,7 +634,10 @@ public class IHaveNeeds extends ListActivity implements RespondsToNeedByVoicePro
 					0xffffffff);
 			
 			LayoutParams lp=dialog.getWindow().getAttributes();
-			lp.y=lp.y+305;
+			lp.y=mHeight-575;
+			if(lp.y<0) {
+				lp.y=0;
+			}
 			dialog.getWindow().setAttributes(lp);
 			Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 			intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -752,6 +740,10 @@ public class IHaveNeeds extends ListActivity implements RespondsToNeedByVoicePro
 		case R.id.addon_menu:
 			Intent i5=new Intent(this,IHaveAddons.class);
 			startActivity(i5);
+			return true;
+		case R.id.history_menu:
+			Intent i6=new Intent(this, IHaveHistory.class);		
+			startActivity(i6);
 			return true;
 		}
 			
@@ -872,6 +864,12 @@ public class IHaveNeeds extends ListActivity implements RespondsToNeedByVoicePro
 	@Override
 	public void onResume() {
 		try {
+			
+			Display display = getWindowManager().getDefaultDisplay();
+			Point size = new Point();
+			mHeight=display.getHeight();
+			
+			
 			int logFilter=3;
 			try {
 				logFilter = Integer.valueOf(getSharedPreferences(

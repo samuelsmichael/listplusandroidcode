@@ -40,13 +40,13 @@
 		<LinearLayout android:orientation="horizontal"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:layout_gravity="bottom">
-			<Button android:id="@+id/location_button_confirm" android_layout_gravity="bottom"
+			<Button android:id="@+id/location_button_confirma" android:layout_gravity="bottom"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:text="@string/location_confirm">
 			</Button>
-			<Button android:id="@+id/location_button_cancel"
+			<Button android:id="@+id/location_button_cancela"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android_layout_gravity="bottom"
+				android:layout_gravity="bottom"
 				android:text="@string/location_cancel">
 			</Button>
 		</LinearLayout>

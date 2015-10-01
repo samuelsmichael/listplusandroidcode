@@ -1,17 +1,23 @@
 package com.mibr.android.intelligentreminder;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -27,6 +33,8 @@ import android.widget.Toast;
 public class BusinessFinder {
 	private static final String BASE_YAHOO="http://local.yahooapis.com/LocalSearchService/V3/localSearch?appid=yDSMLAbV34EUyy1AJrHKqbb1gL4A4xvchBWqr4MaNharntRqZTcCfm5Qs.ugfgTyrdoe4eoGxpM-&results=15&radius=50&sort=distance&query=";
 	private static final String BASE_BING="http://api.search.live.net/xml.aspx?Appid=331AA259005BADEDD6B97257A503081075F8FC03&sources=phonebook&radius=50&count=10&sortby=distance&query=";
+	public static final String GOOGLE_API_KEY = "AIzaSyCiLgS6F41lPD-aHj7yMycVDv38gb1vd2o";
+	public static final int LIMIT_NBR_ACCESSES = 10;
 	private Context _ctx;
 	private LocationManager mLocationManager;
 	public Location getLastKnownLocation() {
@@ -41,112 +49,141 @@ public class BusinessFinder {
 		_ctx=ctx;
 		mLocationManager=locationManager;
 	}
-	private String doBingCityStateZip(String city, String state, String zip) {
-		String tii="";
-		if(INeedToo.isNothingNot(city)) {
-			tii+="+"+buildNearStuff(city);
+	
+	public void getBusinessesNamedNear(String business,String lat,String lon ,
+			ArrayList<Address> runningList, String nextPageToken,
+			int nbrOfAccessesLeft, int nthAccessStartingAt1) throws Exception {
+		business=business.trim();
+		String rememberLastGoodNextPageToken=null;
+		int countRetries=0;
+		int priorRunningListCount=0;
+		while (true) {
+			nextPageToken=getBusinessesNamedNearPrivate(business,lat,lon,runningList,nextPageToken,nbrOfAccessesLeft,nthAccessStartingAt1);
+			nbrOfAccessesLeft--;
+			nthAccessStartingAt1++;
+			/* for some reason, Google returns nothing if called to quickly with "nextpage"*/
+			if(priorRunningListCount==runningList.size() &&
+					runningList.size()>0 && rememberLastGoodNextPageToken!=null && countRetries<2) {
+				countRetries++;
+				nextPageToken=rememberLastGoodNextPageToken;
+				Thread.currentThread().sleep(2500);
+				
+
+			} else {
+				countRetries=0;
+				if(nextPageToken!=null) {
+					rememberLastGoodNextPageToken=nextPageToken;
+				}
+				priorRunningListCount=runningList.size();
+				if(nextPageToken==null || nbrOfAccessesLeft<=0) {
+					break;
+				}
+			}
 		}
-		if(INeedToo.isNothingNot(state)) {
-			tii+="+"+state;
-		}
-		if(INeedToo.isNothingNot(zip)) {
-			tii+="+"+zip;
-		}
-		return tii;
 	}
 	
+	private String getBusinessesNamedNearPrivate(String business,String lat, String lon,
+			ArrayList<Address> runningList, String nextPageToken,
+			int nbrOfAccessesLeft, int nthAccessStartingAt1) throws Exception { 
+	
+		String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
+				+ lat
+				+ ","
+				+ lon
+				+ "&pagetoken="
+				+ (nextPageToken == null ? "" : nextPageToken)
+				+ "&radius=38000&keyword="+URLEncoder.encode(business)+"&sensor=true&key="
+				+ GOOGLE_API_KEY;
+		URL u = new URL(url);
+		HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+		conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
+		conn.connect();
+		OutputStream out = conn.getOutputStream();
+		PrintWriter pw = new PrintWriter(out);
+		pw.close();
+		InputStream is = conn.getInputStream();
+		InputStreamReader is2 = new InputStreamReader(is);
+		BufferedReader reader = new BufferedReader(is2);
+		StringBuilder sb = new StringBuilder();
+		String line = null;
+		while ((line = reader.readLine()) != null) {
+			sb.append(line + "\n");
+		}
+		is.close();
+		conn.disconnect();
+		String json = sb.toString();
+		JSONObject jObj = new JSONObject(json);
+		nextPageToken = null;
+		try {
+			String status = jObj.getString("status");
+			if (status == "OVER_QUERY_LIMIT") {
+				Thread.currentThread().sleep(1000);
+				nbrOfAccessesLeft--;
+				nthAccessStartingAt1++;
+				return nextPageToken;
+			}
+		} catch (Exception e) {
+		}
+		try {
+			nextPageToken = jObj.getString("next_page_token");
+		} catch (Exception e) {
+		}
+		JSONArray results = jObj.getJSONArray("results");
+		for (int i = 0; i < results.length(); i++) {
+			JSONObject geometry = ((JSONObject) results.get(i))
+					.getJSONObject("geometry");
+			JSONObject location2 = geometry.getJSONObject("location");
+			String lat2 = location2.getString("lat");
+			String lng = location2.getString("lng");
+			String name = ((JSONObject) results.get(i)).getString("name");
+			String vicinity = ((JSONObject)results.get(i)).getString("vicinity");
+			Address address = new Address(Locale.getDefault());
+			address.setLatitude(Double.valueOf(lat2));
+			address.setLongitude(Double.valueOf(lng));
+			address.setAddressLine(0, name+"-"+vicinity);
+			runningList.add(address);
+		}
+		if (nextPageToken != null && nbrOfAccessesLeft > 1) {
+	//		Thread.currentThread().sleep(2500);
+			return nextPageToken;
+		} else {
+			return null;
+		} 
+	}
 	
 	public ArrayList<ArrayList<String>> businessLocation(String business, String city, 
 			String state, String zip, String lat, String lon) {
-		HttpURLConnection conn=null;
+		
 		try {
-			Hashtable<String,String> alreadyDone=new Hashtable<String,String>();
-			ArrayList<ArrayList<String>> jdLocations=new ArrayList<ArrayList<String>>();
-			String yahooURL=BASE_YAHOO+business+"&zip="+buildNearStuff(zip)+"&city="+buildNearStuff(city)+
-				"&state="+buildNearStuff(state); 
-			if(lat!=null && lat!="") {
-				yahooURL+="&latitude="+buildNearStuff(lat);
+			if (lat==null||lon==null)  {
+				List<Address> addressList = null;
+				Geocoder g = new Geocoder(_ctx);
+				addressList = g.getFromLocationName(
+						(""+(city==null?"":city)+" "+(state==null?"":state)+" "+(zip==null?"":zip)).trim()
+							, 4);
+				lat=String.valueOf(addressList.get(0).getLatitude());
+				lon=String.valueOf(addressList.get(0).getLongitude());
 			}
-			if(lon!=null && lon!="") {
-				yahooURL+="&longitude="+buildNearStuff(lon);
+			ArrayList<Address> trainStationAddresses = new ArrayList<Address>();
+			getBusinessesNamedNear(business, lat, lon, trainStationAddresses,
+					null, LIMIT_NBR_ACCESSES,1);
+			ArrayList<ArrayList<String>> jdAlAlStr=new ArrayList<ArrayList<String>>();
+			for(int i=0;i<trainStationAddresses.size();i++) {
+				Address a=trainStationAddresses.get(i);
+				ArrayList<String> alStr=new ArrayList<String>();
+				alStr.add(a.getAddressLine(0));
+				alStr.add("");
+				alStr.add("");
+				alStr.add(String.valueOf(a.getLatitude()));
+				alStr.add(String.valueOf(a.getLongitude()));
+				jdAlAlStr.add(alStr);
 			}
-			yahooURL = yahooURL.replace(" ", "%20");
-			URL u = new URL(yahooURL); 
-			conn=(HttpURLConnection)u.openConnection();
-			conn.setRequestMethod("POST"); 
-			conn.setDoOutput(true);
-			conn.setDoInput(true); 
-			conn.connect(); 
-			OutputStream out=conn.getOutputStream();
-			PrintWriter pw=new PrintWriter(out);
-			pw.close();
-			InputStream is = conn.getInputStream(); 
-			
-			DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
-			DocumentBuilder db=dbf.newDocumentBuilder();
-			Document doc=db.parse(is);
-			doc.getDocumentElement().normalize();
-			Element rootElement=doc.getDocumentElement();
-			String stotalResultsReturned=rootElement.getAttribute("totalResultsReturned");
-			int totalResultsReturned=Integer.parseInt(stotalResultsReturned);
-			NodeList nodeList=rootElement.getChildNodes();
-			if(totalResultsReturned>0) {
-				for(int i=1;i<=totalResultsReturned;i++) {
-					Element elem=(Element) nodeList.item(i);
-					formatateValues(jdLocations, elem, alreadyDone);
-				}
-				try {is.close();} catch (Exception eieiee) {}
-				return jdLocations;
-			} else {
-				try {is.close();} catch (Exception eieiee) {}
-				return null;
-			}
-		} catch (Exception ee) {
+			return jdAlAlStr;
+		} catch (Exception e) {
 			return null;
-		} finally {
-			try {conn.disconnect();} catch (Exception ee) {}
 		}
-	}
-	private void formatateValues(ArrayList<ArrayList<String>> jdLocations, Element elem, Hashtable<String,String> alreadyDone) {
-		try {
-			String id=elem.getAttribute("id");
-			ArrayList<String> al=new ArrayList<String>();
-			String sAddress=getTextFromElement(elem,"Address");
-			if(alreadyDone.get(sAddress)==null) {
-				alreadyDone.put(sAddress, "");
-				al.add(sAddress);
-				al.add(getTextFromElement(elem,"City"));
-				al.add(getTextFromElement(elem,"State"));
-				al.add(getTextFromElement(elem,"Latitude"));
-				al.add(getTextFromElement(elem,"Longitude"));
-				jdLocations.add(al);
-			} 
-		} catch (Exception eiei) {
-			int x=3;
-		}
-	}
-	private String getTextFromElement(Element elem,String name) {
-		try {
-			NodeList nl=elem.getElementsByTagName(name);
-			Element resultaddress=(Element) nl.item(0);
-			resultaddress.normalize();
-			NodeList array=resultaddress.getChildNodes();
-			return array.item(0).getNodeValue();
-		} catch (Exception ee33d) {
-			return "";
-		}
-	}
-	private String buildNearStuff(String item) {
-		if(item==null) {
-			item="";
-		}
-		String weirdStuff="";
-		String buildThis="";
-		if(item.trim().length()>0) {
-			buildThis+=weirdStuff+item.trim().replaceAll(" ", "%20");
-			weirdStuff="%20";
-		}
-		return buildThis;
 	}
 	
 	public List<Address> getCurrentAddress() throws Exception {

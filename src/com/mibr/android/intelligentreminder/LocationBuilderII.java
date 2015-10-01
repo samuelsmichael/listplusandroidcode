@@ -222,53 +222,59 @@ public class LocationBuilderII {
 			}
 		}
 	}
-	public Boolean searchInternet(Context ctx, LocationManager locationManager) {
-		Boolean retValue=false;
-		try {
-			List<Address> addresses=null;
-			BusinessFinder bf=new BusinessFinder(ctx,locationManager);
-			String jdCity=null;
-			String jdState=null;
-			String jdZip=null;
-			String jdLatitude=null;
-			String jdLongitude=null;
-			Location loc=bf.getLastKnownLocation();
-			if(loc==null) {
-				addresses=bf.getCurrentAddress();
-				if(addresses!=null && addresses.size()>0) {
-					jdCity=addresses.get(0).getLocality();
-					jdState=addresses.get(0).getAdminArea();
-					jdZip=addresses.get(0).getPostalCode();
+	public void searchInternet(final IHaveLocations caller, final LocationManager locationManager) {
+		
+		new Thread(new Runnable(){
+			public void run() {
+		
+				Boolean retValue=false;
+				try {
+					List<Address> addresses=null;
+					BusinessFinder bf=new BusinessFinder(caller.getApplicationContext(),locationManager);
+					String jdCity=null;
+					String jdState=null;
+					String jdZip=null;
+					String jdLatitude=null;
+					String jdLongitude=null;
+					Location loc=bf.getLastKnownLocation();
+					if(loc==null) {
+						addresses=bf.getCurrentAddress();
+						if(addresses!=null && addresses.size()>0) {
+							jdCity=addresses.get(0).getLocality();
+							jdState=addresses.get(0).getAdminArea();
+							jdZip=addresses.get(0).getPostalCode();
+						}
+					} else { 
+						jdLatitude=String.valueOf(loc.getLatitude());
+						jdLongitude=String.valueOf(loc.getLongitude());
+					}
+					ArrayList<ArrayList<String>> businesses= bf.businessLocation(_name, jdCity, jdState, jdZip, jdLatitude,jdLongitude);
+					java.util.ArrayList<String> jdaddresses=new java.util.ArrayList<String>();
+					java.util.ArrayList<String> jdlatitudes=new java.util.ArrayList<String>();
+					java.util.ArrayList<String> jdlongitudes=new java.util.ArrayList<String>();
+					java.util.ArrayList<String> jdzips=new java.util.ArrayList<String>();
+					if(businesses.size()>0) {
+						retValue=true;
+						Boolean gotone=false;
+						Iterator it=businesses.iterator();
+						while (it.hasNext()) {
+							ArrayList<String> al=(ArrayList<String>)it.next();
+							jdaddresses.add(al.get(0) + " " + al.get(1)+ " " + al.get(2));
+							jdlatitudes.add(al.get(3));
+							jdlongitudes.add(al.get(4));
+						}
+						_jdaddresses=jdaddresses;
+						_jdlatitudes=jdlatitudes;
+						_jdlongitudes=jdlongitudes;
+						_jdzips=jdzips;
+						caller.searchingTheInternetCallback(true);
+					} else {
+						caller.searchingTheInternetCallback(false);
+					}
+				} catch (Exception eieio) {
+					caller.searchingTheInternetCallback(false);
 				}
-			} else { 
-				jdLatitude=String.valueOf(loc.getLatitude());
-				jdLongitude=String.valueOf(loc.getLongitude());
 			}
-			ArrayList<ArrayList<String>> businesses= bf.businessLocation(_name, jdCity, jdState, jdZip, jdLatitude,jdLongitude);
-			java.util.ArrayList<String> jdaddresses=new java.util.ArrayList<String>();
-			java.util.ArrayList<String> jdlatitudes=new java.util.ArrayList<String>();
-			java.util.ArrayList<String> jdlongitudes=new java.util.ArrayList<String>();
-			java.util.ArrayList<String> jdzips=new java.util.ArrayList<String>();
-			if(businesses.size()>0) {
-				retValue=true;
-				Boolean gotone=false;
-				Iterator it=businesses.iterator();
-				while (it.hasNext()) {
-					ArrayList<String> al=(ArrayList<String>)it.next();
-					jdaddresses.add(al.get(0) + " " + al.get(1)+ " " + al.get(2));
-					jdlatitudes.add(al.get(3));
-					jdlongitudes.add(al.get(4));
-				}
-				_jdaddresses=jdaddresses;
-				_jdlatitudes=jdlatitudes;
-				_jdlongitudes=jdlongitudes;
-				_jdzips=jdzips;
-			} else {
-			}
-		} catch (Exception eieio) {
-			int i=3;
-			int j=i;
-		}
-		return retValue;
+		}).start();		
 	}
 }

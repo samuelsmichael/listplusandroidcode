@@ -1,5 +1,8 @@
 package com.mibr.android.intelligentreminder;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 import com.mibr.android.intelligentreminder.R;
 import com.mibr.android.intelligentreminder.INeedLocationService.IncomingHandler;
 
@@ -30,10 +33,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
-import com.android.vending.licensing.LicenseChecker;    
-import com.android.vending.licensing.LicenseCheckerCallback;
-import com.android.vending.licensing.ServerManagedPolicy;    
-import com.android.vending.licensing.AESObfuscator;
+import com.google.android.vending.licensing.LicenseChecker;    
+import com.google.android.vending.licensing.LicenseCheckerCallback;
+import com.google.android.vending.licensing.ServerManagedPolicy;    
+import com.google.android.vending.licensing.AESObfuscator;
 
 
 
@@ -82,7 +85,9 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-public class INeedToo extends TabActivity implements LocationListener,RespondsToNeedByVoiceProgress  {
+public class INeedToo extends TabActivity implements LocationListener,RespondsToNeedByVoiceProgress,
+GooglePlayServicesClient.ConnectionCallbacks,
+GooglePlayServicesClient.OnConnectionFailedListener {
 	
 	public static Boolean IS_ANDROID_VERSION=true;
 	private static final int JUST_CHECKING_FOR_LICENSE=39111;
@@ -119,12 +124,14 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 	Dialog dialogDoingSamples;
 	static ArrayList<ArrayList<String>> allItems;
 	static int whereImAtInAllItems=0;
+    private LocationClient mLocationClient;
+    public static Location InitialLocation;
 
 
 /* When changing version (and "trial" vs "real") 
- *   1. Scan on TRIAL_VS_REAL  
- *   2. In strings, change title
- *   3. Change name in manifest
+ *   1. Scan on TRIAL_VS_REAL 
+ *   2. In strings, change title (I think it's app name)
+ *   3. Change name in manifest (NO, I don't think so)
  *   4a. right click INeed2 Android Tools Rename Application Package
  *   4b. right click com.mibr.android.intelligentreminder refactor rename
  *   5. android:debuggable="true" to "false"
@@ -139,7 +146,7 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 
  * 
  * */
-	public static String CURRENT_VERSION = "4.13a"; // see layout_listplus.xml, as well as the manifest file and Strings
+	public static String CURRENT_VERSION = "5.01"; // see layout_listplus.xml, as well as the manifest file and Strings
 /* When TRIAL_VS_REAL*/
 	//public static String PREFERENCES_LOCATION="com.mibr.android.intelligentremindertrial_preferences";
 	public static String PREFERENCES_LOCATION="com.mibr.android.intelligentreminder_preferences";
@@ -576,26 +583,30 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
     };
     private static final String BASE64_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhZrIaNqneMAux90tFKHBwnFvS+NXqIhcqFQ3ZrUTuQN/Uy6hZZyKUJVcnUOMVWPWtK6dtN6FzqTNNK3c8aJpAiTQH0rtFzh4lt1CI0BojSV4WfDosgLh8Tzy6iy70z7R1g8P3CiHcwbO96kO1Hut997gYtFWUO/Ot1B6SdourkxN/oUrcaS0JAjaIcBYrfQhlm8QOJw3FdGqzGjtQ6pJMVc1SI6oSBeKJfuvZy7nLU4+lwdb73McCJLfJUkhNBow+knSbg5L5YxGpPDRVxfeYvVTadJGRHiPRnVI0ndk+DZNBOifgqRQubO9lri0uwu4gx+D12CyvpC1YS2A1gn7ZwIDAQAB";
     private class MyLicenseCheckerCallback implements LicenseCheckerCallback {        
-    	public void allow() {            
+		@Override
+		public void allow(int reason) {
     		if (isFinishing()) {                
     			// Don't update UI if Activity is finishing.                
     			return;            
     			}            
     		// Should allow user access.            
     		handleResultOfLicenseCheck(true);        
-    	}        
-    	public void dontAllow() {            
+		}
+		@Override
+		public void dontAllow(int reason) {
     		if (isFinishing()) {                
     			// Don't update UI if Activity is finishing.                
     			return;            
     			}            
     		handleResultOfLicenseCheck(false);            
-    	}
+		}
 		@Override
-		public void applicationError(ApplicationErrorCode errorCode) {
-			// TODO Auto-generated method stub
-			int bkhere=3;
-			int bkthere=bkhere;
+		public void applicationError(int errorCode) {
+    		if (isFinishing()) {                
+    			// Don't update UI if Activity is finishing.                
+    			return;            
+    			}            
+    		handleResultOfLicenseCheck(false);            
 		}    
     }
 	
@@ -630,6 +641,8 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 //			}
 //		});
 		super.onCreate(savedInstanceState);
+        mLocationClient = new LocationClient(this, this, this);		
+        mLocationClient.connect();
 		try {
 			if (getIntent().getAction()!=null&&getIntent().getAction().equals("doPrimitiveDeletedNeed")) {
 				transmitNetwork(getIntent().getStringExtra("phoneid"));
@@ -800,15 +813,20 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 				"Location",(BitmapDrawable) getResources().getDrawable(
 						android.R.drawable.ic_menu_mapmode)).setContent(
 								new Intent(this, IHaveLocations.class).putExtra("doingcompany", _doingLocationCompany)));
-	tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator(
-			"History",(BitmapDrawable) getResources().getDrawable(
-					R.drawable.chart)).setContent(
-							new Intent(this, IHaveHistory.class)));
-	tabHost.addTab(tabHost.newTabSpec("tab4").setIndicator(
-			"System",(BitmapDrawable) getResources().getDrawable(
-					R.drawable.status_bar1_blackwhite)).setContent(
-							new Intent(this, ListPlus.class)));
-		
+		Intent intent = new Intent(this, NeedMap.class).putExtra("doingcompany", _doingLocationCompany);
+		tabHost.addTab(tabHost.newTabSpec("tab2a").setIndicator(
+				"Map",(BitmapDrawable) getResources().getDrawable(
+						R.drawable.ic_dialog_map)).setContent(intent));
+		/*
+		tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator(
+				"History",(BitmapDrawable) getResources().getDrawable(
+						R.drawable.chart)).setContent(
+								new Intent(this, IHaveHistory.class)));
+		*/
+		tabHost.addTab(tabHost.newTabSpec("tab4").setIndicator(
+				"System",(BitmapDrawable) getResources().getDrawable(
+						R.drawable.status_bar1_blackwhite)).setContent(
+								new Intent(this, ListPlus.class)));
 		/*		tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator(
 				"Need",
 				scaleTo((BitmapDrawable) getResources().getDrawable(
@@ -865,7 +883,7 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 				exists=true;
 				Boolean canRead=file.canRead();
 				
-				FileInputStream isr = new FileInputStream("/data/data/com.mibr.android.intelligentreminder/databases/data");
+				FileInputStream isr = new FileInputStream("/data/data/com.mibr.android.intelligentremindertrial/databases/data");
 				FileOutputStream pw = new FileOutputStream("/sdcard/mibr/jddatabase",false);
 
 				byte[] cc = new byte[4096];
@@ -904,8 +922,7 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 				retValue=true;
 			}
 		} else {
-			/*TRIAL_VS_REAL*/
-			file = new File("/data/data/com.mibr.android.intelligentreminder/files/version"+CURRENT_VERSION+"a.txt");
+			file = new File("/data/data/"+getPackageName()+"/files/version"+CURRENT_VERSION+"a.txt");
 			if (file.exists()) {
 				retValue=true;
 			}
@@ -992,7 +1009,7 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 		.setNeutralButton(R.string.msg_cus, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog,int id) {
-				String[] mailto = {"info@intelligentreminder.com",""};
+				String[] mailto = {"diamondsoftware222@gmail.com",""};
 				Intent sendIntent = new Intent(Intent.ACTION_SEND);
 				sendIntent.putExtra(Intent.EXTRA_EMAIL, mailto);
 				sendIntent.putExtra(Intent.EXTRA_SUBJECT, ""
@@ -1037,8 +1054,7 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 				doAlert=true;
 			}
 		} else {
-			/* TRIAL_VS_REAL */
-			file = new File("/data/data/com.mibr.android.intelligentreminder/files/log2.txt");
+			file = new File("/data/data/"+getPackageName()+"/files/log2.txt");
 			if (file.exists()) {
 				file.delete();
 				doAlert=true;
@@ -1078,8 +1094,7 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 				file.delete();
 			}
 		} else {
-			/*TRIAL_VS_REAL*/
-			file = new File("/data/data/com.mibr.android.intelligentreminder/files/log2.txt");
+			file = new File("/data/data/"+getPackageName()+"/files/log2.txt");
 			if (file.exists()) {
 				file.delete();
 			}
@@ -1133,8 +1148,7 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 				return true;
 			}
 		} else {
-			/*TRIAL_VS_REAL*/
-			file = new File("/data/data/com.mibr.android.intelligentreminder/files/log2.txt");
+			file = new File("/data/data/"+getPackageName()+"/files/log2.txt");
 			if (file.exists()) {
 				return true;
 			}
@@ -1149,8 +1163,7 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 				return file;
 			}
 		} else {
-			/*TRIAL_VS_REAL*/
-			file = new File("/data/data/com.mibr.android.intelligentreminder/files/log.txt");
+			file = new File("/data/data/"+getPackageName()+"/files/log.txt");
 			if (file.exists()) {
 				return file;
 			}
@@ -1648,5 +1661,18 @@ public class INeedToo extends TabActivity implements LocationListener,RespondsTo
 		}
 		return mLogger;
 	}
-	
+	@Override
+	public void onConnected(Bundle arg0) {
+		InitialLocation=mLocationClient.getLastLocation();
+        mLocationClient.disconnect();
+	}
+
+
+	@Override
+	public void onDisconnected() {
+	}	
+
+	@Override
+	public void onConnectionFailed(ConnectionResult connectionResult) {
+	}		
 }

@@ -23,6 +23,18 @@
 			  	android:summary="@string/defaultvoicenotification_summary"
 			  ></CheckBoxPreference>
 			  <CheckBoxPreference
+			  	android:defaultValue="true"
+			  	android:key="VoiceNotificationVerbose"
+			  	android:title="Verbose voice notifications"
+			  	android:summary="Check this box if you want a verbose voice notification."
+			  ></CheckBoxPreference>
+			  <CheckBoxPreference
+			  	android:defaultValue="true"
+			  	android:key="VoiceNotificationNavigate"
+			  	android:title="Voice navigation"
+			  	android:summary="Check this box if you to be prompted for navigation when receiving a voice notification."
+			  ></CheckBoxPreference>
+			  			  <CheckBoxPreference
 			  	android:key="PopupNotifications"
 			  	android:defaultValue="false"
 			  	android:title="@string/defaultpopupnotification_title"

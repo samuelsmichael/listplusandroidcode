@@ -11,21 +11,30 @@ import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
-public class INeedTimerServices extends Service {
+public class INeedTimerServices extends Service implements
+		GooglePlayServicesClient.ConnectionCallbacks,
+		GooglePlayServicesClient.OnConnectionFailedListener { 
 	private static long MTIMEOALARMINTENSECONDINTERVALS=12;
 	private static Timer mLocationsTimer = null;
 	private static Timer mLocationsTimer2=null;
@@ -36,6 +45,9 @@ public class INeedTimerServices extends Service {
 	private Hashtable mRegistrations=new Hashtable();
 	public static Boolean USINGSYSTEMALARM=true;
 	final static String TAG = "timeserv";
+    private LocationClient mLocationClient;
+    private static boolean DOLOCATIONCLIENT=true;
+    private static boolean DOLOCATIONMANAGER=true;
 
 	
 	private class PandP {
@@ -107,7 +119,7 @@ public class INeedTimerServices extends Service {
 			Location.distanceBetween(pnp.mProximity.getmLatitude(), pnp.mProximity.getmLongitude(), newLocation.getLatitude(), newLocation.getLongitude(), results);
 			if(results[0]<=(float)pnp.mProximity.getmNoteDx()) {
 				if(!pnp.isIn) {
-					pnp.mProximityReceiver.entering();
+					pnp.mProximityReceiver.entering(newLocation);
 				}
 				pnp.isIn=true;
 			} else {
@@ -126,79 +138,64 @@ public class INeedTimerServices extends Service {
 		try {
 			getLogger().log("INeedTimerServices : just entered doS()");
 
-			Location jdlocation=getLocationManager().getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//			Location jdlocation=getLocationManager().getLastKnownLocation(LocationManager.GPS_PROVIDER);
 			//			manageLocationNotifications(jdlocation);
 			//			mLastKnownLocation= jdlocation;
 			if(_jdFY==0) {
-						if(jdlocation!=null) {
-							try {
-								getLogger().log(
-									"doS ing: " + jdlocation.toString(), 1);
-								getLogger().log2("INeedTimerServices : jdoS ing:"+ jdlocation.toString());
-							} catch (Exception e) {}
-						}
+	//					if(jdlocation!=null) {
+		//					try {
+			//					getLogger().log(
+				//					"doS ing: " + jdlocation.toString(), 1);
+					//			getLogger().log2("INeedTimerServices : jdoS ing:"+ jdlocation.toString());
+						//	} catch (Exception e) {}
+						//}
 //						INeedToo.mSingleton.log(
 //								"doS ing: ", 1);
 				_jdFY++;
-				long jdInterval=12;
-				try {
-					jdInterval=getAlarmInTenSecondIntervals();
-				} catch (Exception eee) {}
-				getLocationManager().requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000*9*jdInterval, 200, new LocationListener() {
-					@Override
-					public void onLocationChanged(Location location) {
-						try {
-//							if(location!=null) {
-//							INeedToo.mSingleton.log("Type 2b: "+
-//									location.toString(), 1);
-//							}
-							if(location.hasAccuracy()==false || location.getAccuracy()<412) {
-								manageLocationNotifications(location);
-								getLocationManager().removeUpdates(this); // added 4.29.2011
-//4/29/2011								LocationManager locationManager=(android.location.LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//4/29/2011								locationManager.removeUpdates(this);
-								try {
-									if(
-											(location.hasSpeed() && location.getSpeed()>2f)
-									 || (
-											mLastKnownLocation != null && location.distanceTo(mLastKnownLocation)> 100f
-									)) {
-										modifyAlarmMinutes(false);
-									} else {
-										if(location.getSpeed()<1f) {
-											modifyAlarmMinutes(true);
-										}
-									}
-								} catch (Exception ee33dd3) {}
-								mLastKnownLocation= location;
-							}
-							if(_jdFY>0) {
-								_jdFY--;
-							}
-						} catch (Exception ee) {
+				
+				if(DOLOCATIONCLIENT) {
+			        mLocationClient = new LocationClient(this, this, this);		
+			        mLocationClient.connect();
+				}
+				
+				if(DOLOCATIONMANAGER) {
+					long jdInterval=12;
+					try {
+						jdInterval=getAlarmInTenSecondIntervals();
+					} catch (Exception eee) {}
+					getLocationManager().requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000*9*jdInterval, 200, new LocationListener() {
+						@Override
+						public void onLocationChanged(Location location) {
 							try {
-								getLogger().log(ee.getMessage(), 1);
+								doTheGotLocationStuff(location, this);
+	//							if(location!=null) {
+	//							INeedToo.mSingleton.log("Type 2b: "+
+	//									location.toString(), 1);
+	//							}
+							} catch (Exception ee) {
+								try {
+									getLogger().log(ee.getMessage(), 1);
+								} catch (Exception e) {}
+							}
+						}
+						@Override
+						public void onProviderDisabled(String provider) {
+							try {
+								getLogger().log("Provider " + provider+ " disabled.", 1);
 							} catch (Exception e) {}
 						}
-					}
-					@Override
-					public void onProviderDisabled(String provider) {
-						try {
-							getLogger().log("Provider " + provider+ " disabled.", 1);
-						} catch (Exception e) {}
-					}
-					@Override
-					public void onProviderEnabled(String provider) {
-						try {
-							getLogger().log("Provider " + provider+ " enabled.", 1);
-						} catch (Exception e) {}
-					}
-					@Override
-					public void onStatusChanged(String provider, int status, Bundle extras) {
-						//INeedToo.mSingleton.log("Provider " + provider+ " status changed to "+ String.valueOf(status)+".", 1);
-					}
-				},Looper.getMainLooper());
-
+						@Override
+						public void onProviderEnabled(String provider) {
+							try {
+								getLogger().log("Provider " + provider+ " enabled.", 1);
+							} catch (Exception e) {}
+						}
+						@Override
+						public void onStatusChanged(String provider, int status, Bundle extras) {
+							//INeedToo.mSingleton.log("Provider " + provider+ " status changed to "+ String.valueOf(status)+".", 1);
+						}
+					},Looper.getMainLooper());
+				}
 			}
 		} catch (Exception e) {
 			try {
@@ -238,9 +235,8 @@ public class INeedTimerServices extends Service {
 	public IBinder onBind(Intent arg0) {
 		return null;
 	}
-	@Override
-	public void onStart(Intent intent, int startId) {
-		super.onStart(intent, startId);
+	
+	private void doOnStartStuff(Intent intent, int startId) {
 		mSingleton=this;
 		getLogger().log("INeedTimerServices: here1");	
 				
@@ -281,7 +277,7 @@ mLogger=null;
 			}
 		} else {
 			getLogger().log("INeedTimerServices: here4");	
-			if(mLocationsTimer2==null) {
+			if(mHandler==null) {
 				try {
 					getLogger().log("INeedTimerServices: here4a");	
 					getmAlarmSender();
@@ -300,7 +296,15 @@ mLogger=null;
 				}
 			}
 		}
+		
 	}
+	
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		doOnStartStuff(intent,startId);	
+		return START_STICKY;
+	}		
+	
 	@Override
 	public void onDestroy() {
 		try {
@@ -407,7 +411,49 @@ mLogger=null;
 		getmAlarmSender();
 	}
 	
+	private Handler getHandler() {
+		if (mHandler == null) {
+			mHandler = new Handler();
+		}
+		return mHandler;
+	}	
+	
+	static boolean mHandlerLoopIsActive=false;
+	private static Handler mHandler;
 	private static void startMyLocationsTimer2(long trigger, long interval) {
+			mHandlerLoopIsActive = true;
+			mSingleton.getHandler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					if (mHandlerLoopIsActive) {
+						getmAlarmSender();
+					}
+				}
+			},
+
+			interval);
+			/*
+			 * getLocationsTimer2().schedule(new TimerTask() { public void run() {
+			 * try { doS();
+			 * 
+			 * } catch (Exception ee) {
+			 * 
+			 * } } }, trigger, interval);
+			 */
+		}
+
+		private void stopHandlerLoop() {
+			mHandlerLoopIsActive = false;
+			/*
+			 * if (mLocationsTimer2 != null) { try {
+			 * getLogger().log("----------------------- stopMyLocationsTimer2()",
+			 * 99);
+			 * 
+			 * mLocationsTimer2.cancel(); mLocationsTimer2.purge(); } catch
+			 * (Exception e) { } mLocationsTimer2 = null; }
+			 */
+		}
+		/*
 		getLocationsTimer2().schedule(new TimerTask() {
 			public void run() {
 				try {
@@ -419,8 +465,10 @@ mLogger=null;
 				}
 			}
 		}, trigger, interval);
-	}
+		*/
+	
 	private static void stopMyLocationsTimer2() {
+		/*
 		if (mLocationsTimer2 != null) {
 			try {
 				mLocationsTimer2.cancel();
@@ -429,6 +477,7 @@ mLogger=null;
 			}
 			mLocationsTimer2 = null;
 		}
+		*/
 	}
 
 	private static Timer getLocationsTimer2() {
@@ -452,7 +501,7 @@ mLogger=null;
 		mSingleton.getLogger().log("INeedTimerServices: getAlarmSender 2");	
 		mSingleton.doS();
 		mSingleton.getLogger().log("INeedTimerServices: getAlarmSender 3");	
-		startMyLocationsTimer2(500,1000*5*MTIMEOALARMINTENSECONDINTERVALS*modifyingValue);
+		startMyLocationsTimer2(500,1000*MTIMEOALARMINTENSECONDINTERVALS*modifyingValue);
 		
 		// just for testing   startMyLocationsTimer2(2500,1000);
 		
@@ -480,7 +529,7 @@ mLogger=null;
 			if(MTIMEOALARMINTENSECONDINTERVALS<18) {
 				MTIMEOALARMINTENSECONDINTERVALS++;
 				try {
-					resetmAlarmSender();
+					//resetmAlarmSender();
 					mSingleton.getLogger().log("Increasing alarm interval to "+String.valueOf(MTIMEOALARMINTENSECONDINTERVALS), 1);
 				} catch (Exception ee33) {
 					
@@ -491,7 +540,7 @@ mLogger=null;
 			if(MTIMEOALARMINTENSECONDINTERVALS>2) {
 				MTIMEOALARMINTENSECONDINTERVALS--;
 				try {
-					resetmAlarmSender();
+					//resetmAlarmSender();
 					mSingleton.getLogger().log("Decreasing alarm interval to "+String.valueOf(MTIMEOALARMINTENSECONDINTERVALS), 1);
 				} catch (Exception ee33) {
 					
@@ -510,4 +559,58 @@ mLogger=null;
 		}
 		return mLogger;
 	}	
+	@Override
+	public void onConnected(Bundle arg0) {
+		Location location=mLocationClient.getLastLocation();
+		if (location!=null) {
+			doTheGotLocationStuff(location, null);
+		} else {
+			if(_jdFY>0) {
+				_jdFY--;
+			}
+		}
+        mLocationClient.disconnect();
+	}
+
+
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub		
+	}	
+
+	@Override
+	public void onConnectionFailed(ConnectionResult connectionResult) {
+		if(_jdFY>0) {
+			_jdFY--;
+		}
+	}	
+	private synchronized void doTheGotLocationStuff(Location location, LocationListener listener) {
+		if(_jdFY>0) {
+			_jdFY--;
+		}
+		if(location.hasAccuracy()==false || location.getAccuracy()<412) {
+			manageLocationNotifications(location);
+			if(listener!=null) {
+				getLocationManager().removeUpdates(listener); // added 4.29.2011
+			}
+//4/29/2011								LocationManager locationManager=(android.location.LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//4/29/2011								locationManager.removeUpdates(this);
+			try {
+				if(
+						(location.hasSpeed() && location.getSpeed()>2f)
+				 || (
+						mLastKnownLocation != null && location.distanceTo(mLastKnownLocation)> 100f
+				)) {
+					modifyAlarmMinutes(false);
+				} else {
+					if(location.getSpeed()<1f) {
+						modifyAlarmMinutes(true);
+					}
+				}
+			} catch (Exception ee33dd3) {}
+			mLastKnownLocation= location;
+		}
+		
+	}
+
 }

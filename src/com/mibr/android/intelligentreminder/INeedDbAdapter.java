@@ -281,6 +281,18 @@ public class INeedDbAdapter {
 				" SELECT _id FROM location WHERE name='"+doubleApostophize(name)+"'", null);
 	}
 
+	public Cursor fetchActiveLocations() {
+		String sql=" SELECT DISTINCT ifnull(l.company,'') as company, ln.locationid, l.name as nameLocation, ifnull(l.longitude,'') as longitude, ifnull(l.latitude,'') as latitude"+
+				   " FROM locationneedassociation ln " +
+				   "	INNER JOIN Location l ON l._id=ln.locationid" +
+				   "	INNER JOIN Need n ON n._id=ln.needid " +
+				   "	INNER JOIN Item i ON i._id=n.ItemId" +
+				   " WHERE" +
+				   "	datecleared is null  AND contactid is null and " +
+				   "	datedeleted > '" + mDateFormat.format(new Date()) + "'" +
+				   " ORDER BY company";
+		return getSqlDb().rawQuery(sql, null);	
+	}
 	public Cursor getOutboundData() {
 		String sql=" SELECT ln.needid, ln.locationid, n._id as _idNeed, ifnull(n.description,'') as description, " +
 				   "		l.phoneid as phoneid,l._id as _idLocation," +

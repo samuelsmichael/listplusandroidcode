@@ -1,5 +1,6 @@
 package com.mibr.android.intelligentreminder;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.mibr.android.intelligentreminder.R;
 
 import java.io.FileNotFoundException;
@@ -32,6 +33,7 @@ import android.graphics.PixelFormat;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,6 +69,25 @@ public class INeedLocationService extends Service {
 
 
 
+	private static String[] BEARING = {
+		"North",
+		"North, North East",
+		"North East",
+		"East, North East",
+		"East",
+		"East, South East",
+		"South East",
+		"South, South East",
+		"South",
+		"South, South West",
+		"South West",
+		"West, South West",
+		"West",
+		"West, North West",
+		"North West",
+		"North, North West"
+	};
+
 	/* playing window 1 */
 	
 	private View mView;
@@ -76,27 +97,29 @@ public class INeedLocationService extends Service {
 
 	private void logNotification(boolean isEntering, long id, double latitude,
 			double longitude, String name) {
-		Location lastKnownLocation = getmProximityManager().getLastKnownLocation();
 		try {
-			INeedToo.mSingleton.setLatestLocation(lastKnownLocation);
-		} catch (Exception eii33) { 
-			
-		}
-		String provider = getmProximityManager().getProvider();
-		String whatsHappening = "ENTERING";
-		if (!isEntering) {
-			whatsHappening = "EXITING"; 
-		}
-		Location location = new Location(provider);
-		location.setLatitude(Double.valueOf(latitude));
-		location.setLongitude(Double.valueOf(longitude));
-		float dx = lastKnownLocation.distanceTo(location);
-		DecimalFormat df = new DecimalFormat("###.#####");
-		String sformattedDx = df.format((double) dx);
-		getLogger().log(whatsHappening + "|" + name + " (lat="
-				+ latitude + " long=" + longitude + ")|"
-				+ lastKnownLocation.getLatitude() + "|"
-				+ lastKnownLocation.getLongitude() + "|" + sformattedDx, 0);
+			Location lastKnownLocation = getmProximityManager().getLastKnownLocation();
+			try {
+				INeedToo.mSingleton.setLatestLocation(lastKnownLocation);
+			} catch (Exception eii33) { 
+				
+			}
+			String provider = getmProximityManager().getProvider();
+			String whatsHappening = "ENTERING";
+			if (!isEntering) {
+				whatsHappening = "EXITING"; 
+			}
+			Location location = new Location(provider);
+			location.setLatitude(Double.valueOf(latitude));
+			location.setLongitude(Double.valueOf(longitude));
+			float dx = lastKnownLocation.distanceTo(location);
+			DecimalFormat df = new DecimalFormat("###.#####");
+			String sformattedDx = df.format((double) dx);
+			getLogger().log(whatsHappening + "|" + name + " (lat="
+					+ latitude + " long=" + longitude + ")|"
+					+ lastKnownLocation.getLatitude() + "|"
+					+ lastKnownLocation.getLongitude() + "|" + sformattedDx, 0);
+		} catch (Exception eeWhoCares) {}
 	}
 
 	private Boolean wereDoingVoiceNotifications() {
@@ -112,8 +135,18 @@ public class INeedLocationService extends Service {
 		return dodah;
 	}
 	
+	public String getProvider() {
+		if(USING_LOCATION_SERVICES) {
+			Criteria criteria = new Criteria();
+			criteria.setAccuracy(Criteria.ACCURACY_FINE);
+			return ((android.location.LocationManager) getSystemService(Context.LOCATION_SERVICE)).getBestProvider(criteria, false);
+		} else {
+			return "gps";
+		}
+	}
+
 	private void notifyUser(String name, boolean isEntering, int id,
-			double latitude, double longitude, Boolean isContactNotification) {
+			double latitude, double longitude, Boolean isContactNotification, Location currentLocation) {
 		getLogger().log2("INeedLocationServices:notifyUser");	
 
 		if (mNotificationManager == null) {
@@ -126,6 +159,22 @@ public class INeedLocationService extends Service {
 			int cnt=curses.getCount();
 /*bbhbb2*/			logNotification(true, (long) id, latitude, longitude, name);
 			if (cnt > 0) {
+				boolean ringerModeNormal=false;
+				boolean ringerModeSilent=false;
+				boolean ringerModeVibrate=false;
+				AudioManager audio = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);				
+				switch( audio.getRingerMode() ){
+				case AudioManager.RINGER_MODE_NORMAL:
+					ringerModeNormal=true;
+				   break;
+				case AudioManager.RINGER_MODE_SILENT:
+					ringerModeSilent=true;
+				   break;
+				case AudioManager.RINGER_MODE_VIBRATE:
+					ringerModeVibrate=true;
+				   break;
+				}				
+				
 				/*bbhbb1  Toast.makeText(getApplicationContext(), "2 notifyUser-gotone", Toast.LENGTH_SHORT).show();*/
 				
 				// Intent contentIntent = new Intent(Intent.ACTION_MAIN);
@@ -143,12 +192,13 @@ public class INeedLocationService extends Service {
 				// "6");
 				if (getSharedPreferences(INeedToo.PREFERENCES_LOCATION,
 						Preferences.MODE_PRIVATE).getBoolean(
-								"NotificationUseVibrate", true)) {
+								"NotificationUseVibrate", true) && !ringerModeSilent) {
 					nb.defaults |= Notification.DEFAULT_VIBRATE;
 				}
 				if (getSharedPreferences(INeedToo.PREFERENCES_LOCATION,
 						Preferences.MODE_PRIVATE).getBoolean(
-								"NotificationUseSound", true)&& !(wereDoingVoiceNotifications() && !isContactNotification)) {
+								"NotificationUseSound", true)&& !(wereDoingVoiceNotifications() && !isContactNotification)
+								&& !ringerModeSilent && !ringerModeVibrate) {
 					nb.defaults |= Notification.DEFAULT_SOUND;
 				}
 				/*bbhbb1     Toast.makeText(getApplicationContext(), "4 notifyUser-got past gettingSharedPreferences", Toast.LENGTH_SHORT).show();*/
@@ -174,7 +224,83 @@ public class INeedLocationService extends Service {
 				String lesNeedsPopupDescription="";
 				String stars="";
 				String slashN="";
-				String lesNeedsSayIt="You have the following needs at location "+name+".. ";
+				StringBuilder sb=new StringBuilder();
+				sb.append(name);
+				boolean doNavigation=false;
+				if(currentLocation != null) {
+					try {
+						float[] results=new float[3];
+						Location.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(), latitude, longitude, results);
+						float dx=results[0];
+						int dxInt=Math.round(dx);
+						if(dxInt>150) {
+							if (
+			 					getSharedPreferences(INeedToo.PREFERENCES_LOCATION,
+								Preferences.MODE_PRIVATE).getBoolean(
+										"VoiceNotificationNavigate", true)
+							) {
+								doNavigation=true;
+							}
+							double sideAdjacent=longitude - currentLocation.getLongitude();
+							double sideOpposite=latitude-currentLocation.getLatitude();
+							double ratio=(sideOpposite)/(sideAdjacent);
+							double arcTangent = Math.atan(ratio);
+							double resultant=1.5708-arcTangent;
+							if(sideAdjacent>0 && sideOpposite<0) {
+								// nada resultant+=Math.PI/4;
+							} else {
+								if(sideAdjacent<0 && sideOpposite<0) {
+									resultant+=Math.PI;
+								} else {
+									if(sideAdjacent<=0&&sideOpposite>0) {
+										resultant+=Math.PI;
+									}
+								}
+							}
+//???							resultant-=Math.PI/8;
+							if(resultant<0) {
+								resultant+=2*Math.PI;
+							}
+							int iResultant=  (int)(resultant/(Math.PI/8));
+							if(iResultant<0) {
+								iResultant=0;
+							} else {
+								if(iResultant>15) {
+									iResultant=iResultant-15;
+								}
+							}
+							Location dest=new Location(getProvider());
+							dest.setLatitude(latitude);
+							dest.setLongitude(longitude);
+							float bearing =  ((float)Math.round(currentLocation.bearingTo(dest)+10f))/10;
+							
+							getLogger().log(
+									"Current: latlng "+ String.valueOf(currentLocation.getLatitude())+","+String.valueOf(currentLocation.getLongitude())+".\n"+
+									("Has accuracy:" + (currentLocation.hasAccuracy()?"yes: "+String.valueOf(currentLocation.getAccuracy()):"no"))+"\n" +
+										
+									"Destination: latlng "+ String.valueOf(latitude)+","+String.valueOf(longitude)+".\n"+
+									"Side adj:" + String.valueOf(sideAdjacent)+"\n" +
+									"Side opp:" + String.valueOf(sideOpposite)+"\n" +
+									"Ratio:" + String.valueOf(ratio)+"\n" +
+									"Arctan:" + String.valueOf(arcTangent)+"\n"+
+									"Resultant:" + String.valueOf(resultant)+"\n"+
+									"Quadrant:" + String.valueOf(iResultant)+"\n"+
+									"Bearing: " + String.valueOf(bearing)+ "\n"+
+									"arcTangent(9999)="+String.valueOf(Math.atan(99999))+ "\n"+
+									"arcTangent(1)="+String.valueOf(Math.atan(1))+ "\n"+
+									"arcTangent(.01)="+String.valueOf(Math.atan(.01))+ "\n"
+									,
+									2);
+							if( getSharedPreferences(INeedToo.PREFERENCES_LOCATION,
+								Preferences.MODE_PRIVATE).getBoolean(
+								"VoiceNotificationVerbose", true)
+							) { 
+								sb.append(", which is currently approximately "+String.valueOf(dxInt)+" meters, " + BEARING[iResultant]+ " from you.");
+							}
+						}
+					} catch (Exception eewhocares) {}
+				}
+				String lesNeedsSayIt="You have the following needs at location "+sb.toString()+" .. ";
 				String pause="";
 				int nbrORows=curses.getCount();
 				int nbrORowsCounter=1;
@@ -196,6 +322,9 @@ public class INeedLocationService extends Service {
 					
 					pause=String.valueOf(nbrORowsCounter)+". ";
 				}
+				if(doNavigation) {
+					lesNeedsSayIt+=".  Do you want me to navigate you there?";
+				}
 				/*bbhbb1					        Toast.makeText(getApplicationContext(), "notifyUser-got past getting lesNeeds n desc", Toast.LENGTH_LONG).show();*/
 				/*bbhbb1					        Toast.makeText(getApplicationContext(), "lesNeeds: "+(lesNeeds==null?"null":lesNeeds), Toast.LENGTH_LONG).show();*/
 				PendingIntent pendingIntent = PendingIntent.getActivity(this,
@@ -212,8 +341,12 @@ public class INeedLocationService extends Service {
 				
 				
 				if(!isContactNotification) {
-					if(wereDoingVoiceNotifications() || wereDoingPopupNotifications() ) {
-						sayIt(lesNeedsSayIt,lesNeedsPopup,lesNeedsPopupDescription,name);
+					if( 
+							(wereDoingVoiceNotifications() || wereDoingPopupNotifications()) 
+							 && !ringerModeSilent && !ringerModeVibrate) {
+						sayIt(lesNeedsSayIt,lesNeedsPopup,lesNeedsPopupDescription,name,
+								latitude,
+								longitude,doNavigation);
 					}
 				} else {
 					/* Doing Intent
@@ -523,7 +656,7 @@ public class INeedLocationService extends Service {
 
 			public class ProximityIntentReceiver extends BroadcastReceiver {
 				boolean _imDisabled=false;
-				public void entering() {
+				public void entering(Location currentLocation) {
 					getLogger().log2("INeedLocationServices : entering");
 					GregorianCalendar now = new GregorianCalendar();
 					GregorianCalendar prior = (GregorianCalendar) Proximity.this.mLastSentNotification
@@ -534,7 +667,7 @@ public class INeedLocationService extends Service {
 								Proximity.this.mName, true,
 								Proximity.this.mLocationId,
 								Proximity.this.mLatitude,
-								Proximity.this.mLongitude,false);
+								Proximity.this.mLongitude,false, currentLocation);
 					}
 					Proximity.this.mLastSentNotification = now;				
 				}
@@ -543,7 +676,7 @@ public class INeedLocationService extends Service {
 							Proximity.this.mName, false,
 							Proximity.this.mLocationId,
 							Proximity.this.mLatitude,
-							Proximity.this.mLongitude,false);				
+							Proximity.this.mLongitude,false,null);				
 				}
 				@Override
 				public void onReceive(Context arg0, Intent arg1) {
@@ -560,7 +693,7 @@ public class INeedLocationService extends Service {
 											Proximity.this.mName, true,
 											Proximity.this.mLocationId,
 											Proximity.this.mLatitude,
-											Proximity.this.mLongitude,false);
+											Proximity.this.mLongitude,false,null);
 								}
 								Proximity.this.mLastSentNotification = now;
 							} else {
@@ -568,7 +701,7 @@ public class INeedLocationService extends Service {
 										Proximity.this.mName, false,
 										Proximity.this.mLocationId,
 										Proximity.this.mLatitude,
-										Proximity.this.mLongitude,false);
+										Proximity.this.mLongitude,false,null);
 							}
 						} catch (Exception ei) {
 							CustomExceptionHandler.logException(ei, null);
@@ -646,20 +779,22 @@ public class INeedLocationService extends Service {
 		return mVoiceHelperTimer2;
 	}
 		
-	private void sayIt(String it, String lesNeedsPopup,String lesNeedsPopupDescription,String locationName) {
+	private void sayIt(String it, String lesNeedsPopup,String lesNeedsPopupDescription,String locationName,
+			double latitude, double longitude, boolean navigating) {
 		final String jdSomething=it;
 			Intent jdIntent=new Intent(this, VoiceHelper.class)
 			.putExtra("voicedata",it)
 			.putExtra("lesNeedsPopup",lesNeedsPopup)
 			.putExtra("lesNeedsPopupDescription",lesNeedsPopupDescription)
+			.putExtra("latitude", String.valueOf(latitude))
+			.putExtra("longitude", String.valueOf(longitude))	
+			.putExtra("navigating", navigating)
 			.putExtra("laLocationName",locationName);
 			jdIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(jdIntent);		
 	}
 	
-	@Override
-	public void onStart(Intent intent, int startId) {
-		super.onStart(intent, startId);
+	private void doOnStartStuff(Intent intent, int startId) {
 		mSingleton=this;
 
 		Thread
@@ -729,7 +864,15 @@ public class INeedLocationService extends Service {
 		getApplicationContext().startService(jdIntent2);
 		
 		doBindService();
+
 	}
+	
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		doOnStartStuff(intent,startId);	
+		return START_STICKY;
+	}		
+
 
 	private void unRegisterAllNotificationRequests() {
 		getmProximityManager().unRegisterAllProximityNotifications();
@@ -919,7 +1062,7 @@ public class INeedLocationService extends Service {
 						
 						/*bbhbb1   Toast.makeText(getApplicationContext(), "0.5 About notifyUser", Toast.LENGTH_SHORT).show();*/
 						
-						notifyUser(name,true,key,-1d,-1d,true);
+						notifyUser(name,true,key,-1d,-1d,true,null);
 						
 						
 						

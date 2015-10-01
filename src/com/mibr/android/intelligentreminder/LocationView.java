@@ -189,7 +189,7 @@ public class LocationView extends ListActivity  implements LocationListener {
 					String str=((AutoCompleteTextView)view).getText().toString().trim();
 					if(str.equals(getString(R.string.location_optional))) {
 						((AutoCompleteTextView)view).setText("");
-						((AutoCompleteTextView)view).setTextColor(Color.BLACK);
+						((AutoCompleteTextView)view).setTextColor(Color.WHITE);
 					}
 				}
 			}
@@ -202,7 +202,7 @@ public class LocationView extends ListActivity  implements LocationListener {
 					String str=((EditText)view).getText().toString().trim();
 					if(str.equals(getString(R.string.location_address_hint))) {
 						((EditText)view).setText("");
-						((EditText)view).setTextColor(android.graphics.Color.BLACK);
+						((EditText)view).setTextColor(Color.WHITE);
 					}
 				}
 			}

@@ -15,4 +15,7 @@
 	<item android:id="@+id/addon_menu" android:title="Add-ons"
 		  android:icon="@drawable/ic_menu_addons">
 	</item>
+	<item android:id="@+id/history_menu" android:title="Alert history"
+		  android:icon="@drawable/chart">
+	</item>
 </menu>

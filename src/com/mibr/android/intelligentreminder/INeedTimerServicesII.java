@@ -91,15 +91,15 @@ public class INeedTimerServicesII extends Service {
 			}
 		}
 	}
-	@Override
-	public void onStart(Intent intent, int startId) {
-		super.onStart(intent, startId);
+	@Override 
+	public int onStartCommand(Intent intent, int flags, int startId) {
 		if(mLocationsTimer==null) {
 			startMyLocationsTimer();
 		} else {
 			stopMyLocationsTimer();
 			startMyLocationsTimer();
 		} 
+		return START_STICKY;
 	}
 	@Override
 	public void onDestroy() {

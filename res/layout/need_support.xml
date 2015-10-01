@@ -33,6 +33,7 @@
 		android:shadowColor="#88000000">
 	</TextView>
 	<Button android:layout_margin="11sp" android:width="160sp" android:layout_gravity="center_horizontal" android:text="Email us" android:id="@+id/SupportEmailUs" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+	<Button android:layout_margin="11sp" android:width="160sp" android:layout_gravity="center_horizontal" android:text="Quick Start" android:id="@+id/SupportQuickStart" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 	<Button android:layout_margin="11sp" android:width="160sp" android:layout_gravity="center_horizontal" android:text="Documentation" android:id="@+id/SupportDocumentation" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
  	<Button android:layout_margin="11sp" android:width="160sp" android:layout_gravity="center_horizontal" android:text="Web site" android:id="@+id/SupportWeb" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
  	<Button android:layout_margin="11sp" android:width="160sp" android:layout_gravity="center_horizontal" android:text="Voice Command Examples" android:id="@+id/VoiceCommandExamples" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>

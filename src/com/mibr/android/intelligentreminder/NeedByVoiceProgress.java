@@ -217,7 +217,7 @@ public class NeedByVoiceProgress extends AsyncTask<ArrayList, Hashtable, Boolean
 						dialogTitle="Contact not found";
 						showStatus();
 					} else {
-						dialogTitle="Searcing internet...";
+						dialogTitle="Searching internet...";
 	//					try {dialog.setTitle("Searcing internet...");} catch (Exception ed1){}
 						nb.searchInternet(ctx,locationManager,this);
 						if(nb.atLeastOneLocationIsOkay()) {

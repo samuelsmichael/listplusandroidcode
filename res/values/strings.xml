@@ -12,13 +12,10 @@
     <string name="ineed2pay_state">State</string>
     <string name="ineed2pay_postalcode">Postal code</string>
     <string name="ineed2pay_country">Country</string>
-
     <string name="defaultvoicenotification_title">Need Voice Notifications</string>
     <string name="defaultvoicenotification_summary">Need reminders are spoken. You will still receive regular Android notifications.</string>
     <string name="defaultpopupnotification_title">Need Popup Notifications</string>
     <string name="defaultpopupnotification_summary">Need reminders invoke a popup. You will still receive regular Android notifications.</string>
-    
-    
     <string name="securely_pay">Pay Securely ($1.99) for immediate unlocking of Trial version</string>
     <string name="billing_info">Billing information</string>
     <string name="ineed2pay_expyear_example"> (ex: 2012)</string>
@@ -51,10 +48,10 @@
     <string name="msg_cannotmapcompany">This is a company. Please drilldown and pick one of its Locations to map.</string>
     <string name="longitude_label">Long:</string>
     <string name="location_fill_from_current_loc">From here</string>
-    <string name="location_fill_from_address">From Address....</string>
+    <string name="location_fill_from_address">From Address -----></string>
     <string name="location_fill_from_contacts">Contacts</string>
     <string name="location_needsatthislocation">Needs at this Location</string>
-    <string name="location_title_prompt">Location Name:</string>
+    <string name="location_title_prompt">Name:</string>
     <string name="location_optional">Optional</string>
     <string name="location_address_hint">Address or intersection. Ex: 221 S Forest St Denver
 		CO USA</string>
@@ -175,7 +172,7 @@
     <string name="networking_describingphoneid">Enter the Phone ID(s) that people have given you
 		from their phone (found on Intelligent Reminder System tab. If you
 		have more than one, separate them with semi-colons, just like email.
-		e.g. -- 20013fd8f4dbc118;883228x99312 Note: you\'ll be entering
+		e.g.  20013fd8f4dbc118;883228x99312 Note: you\'ll be entering
 		corresponding nicknames on the next screen. </string>
     <string name="networking_DialogTitlethisphoneid">Your Phone ID</string>
     <string name="Networking_ThisPhoneIDPreferencesTitle">Your Phone ID</string>
@@ -196,5 +193,8 @@
     <string name="title_activity_notification_dialog">NotificationDialog</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_locations_via_map">Choose a Location</string>
+    <string name="title_activity_need_map">Need Map</string>
+    <string name="title_activity_ineed_navigation">INeedNavigation</string>
 
 </resources>

@@ -4,7 +4,7 @@
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
   android:orientation="vertical">
-- 		<RelativeLayout 
+ 		<RelativeLayout 
 			android:layout_width="fill_parent" 
 			android:layout_height="wrap_content" 
 			android:id="@+id/top_control_barl">
@@ -15,11 +15,14 @@
 				android:layout_height="wrap_content" android:layout_alignParentBottom="true">
   				<Button 
 	  				android:id="@+id/ineed_createlocation" 
-  					android:layout_weight="1" android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Location keying \nin manually" /> 
+  					android:layout_weight="1" android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Location manually" /> 
   				<Button 
 	  				android:id="@+id/ineed_createlocationviavoice" 
-  					android:layout_weight="1" android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Location \nvia voice" /> 
-  		</LinearLayout>
+  					android:layout_weight="1" android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Location via voice" /> 
+  				<Button 
+	  				android:id="@+id/ineed_createlocationviamap" 
+  					android:layout_weight="1" android:layout_width="0dip" android:layout_height="wrap_content" android:text="Add Location using map" /> 
+  						</LinearLayout>
 	 		<ListView android:id="@android:id/list" android:layout_width="fill_parent" android:layout_height="0dip" 
 	  			android:choiceMode="multipleChoice" android:layout_above="@id/bottom_control_barl" android:layout_below="@id/top_control_barl"
 	  		/> 

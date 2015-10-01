@@ -48,6 +48,7 @@ public class INeedSupport extends Activity {
 		setContentView(R.layout.need_support);
 		Button webSite=	(Button)findViewById(R.id.SupportWeb);
 		Button doc=	(Button)findViewById(R.id.SupportDocumentation);
+		Button quickStart=	(Button)findViewById(R.id.SupportQuickStart);
 		Button email=(Button)findViewById(R.id.SupportEmailUs);
 		Button voiceCommandExamples=(Button)findViewById(R.id.VoiceCommandExamples);
 		
@@ -67,6 +68,25 @@ public class INeedSupport extends Activity {
 					.setPositiveButton(R.string.msg_ok, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,int id) {
 							Uri uri = Uri.parse(INeedWebService.BASE_URL+"/documentation/usersguidelite.doc");
+							Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+							startActivity(intent);
+							
+						}
+					});
+				AlertDialog alert=builder.create();	
+				alert.show();
+			}
+		});
+		quickStart.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(INeedSupport.this);
+				builder.setMessage("The Quick Start guide will be downloaded, after which you will receive a notification.  Open the notification to read the document.")
+					.setCancelable(false)
+					.setPositiveButton(R.string.msg_ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,int id) {
+							Uri uri = Uri.parse(INeedWebService.BASE_URL+"/documentation/quickstart.pdf");
 							Intent intent=new Intent(Intent.ACTION_VIEW,uri);
 							startActivity(intent);
 							

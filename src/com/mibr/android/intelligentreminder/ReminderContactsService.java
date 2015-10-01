@@ -3,12 +3,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.android.vending.licensing.AESObfuscator;
-import com.android.vending.licensing.LicenseChecker;
-import com.android.vending.licensing.LicenseCheckerCallback;
-import com.android.vending.licensing.ServerManagedPolicy;
-import com.android.vending.licensing.LicenseCheckerCallback.ApplicationErrorCode;
-
 import android.app.Activity;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -36,8 +30,6 @@ public class ReminderContactsService extends Service {
 	private static Boolean IS_ANDROID_VERSION=true;
 	
 	private Handler mHandler;	
-    private LicenseCheckerCallback mLicenseCheckerCallback;
-    private LicenseChecker mChecker;
     // Generate 20 random bytes, and put them here.    
     private static final byte[] SALT = new byte[] {     
     	-46, 65, 30, -128, -103, -57, 74, -64, 51, 88, -95,     

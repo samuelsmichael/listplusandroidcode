@@ -218,6 +218,9 @@ public class NeedBuilder {
 	}
 	private Boolean allLocationsAreOkay() {
 		Boolean ret=true;
+		if(_locations==null || _locations.size()==0) {
+			return false;
+		}
 		for(int i=0;i<_locations.size();i++) {
 			if(_locations.get(i).haveYouGotLocation()==false) {
 				ret= false;
@@ -292,6 +295,8 @@ public class NeedBuilder {
 					jdCity=addresses.get(0).getLocality();
 					jdState=addresses.get(0).getAdminArea();
 					jdZip=addresses.get(0).getPostalCode();
+					jdLat=String.valueOf(addresses.get(0).getLatitude());
+					jdLon=String.valueOf(addresses.get(0).getLongitude());
 				} else {
 					Location loc=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 					if(loc==null) {

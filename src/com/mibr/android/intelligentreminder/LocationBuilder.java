@@ -67,7 +67,7 @@ public class LocationBuilder {
 		String retName="";
 		switch (_state) {
 		case 1:
-			retName=retName + " ..searching";
+			retName=retName + " ..searching internet";
 			break;
 		case 2:
 			retName=retName + "..not found";
@@ -88,7 +88,11 @@ public class LocationBuilder {
 		if(_name==null) {
 			_name=word;
 		} else {
-			_name=_name + " " + word;
+			if(_name.equals("")) {
+				_name=word;
+			} else {
+				_name=_name + " " + word;
+			}
 		}
 	}
 	public Boolean haveYouGotLocation() {

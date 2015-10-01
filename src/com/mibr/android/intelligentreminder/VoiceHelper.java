@@ -35,6 +35,10 @@ public class VoiceHelper extends Activity {
 	private static WindowManager mWindowManager;
 	private CountDownTimer _mCountDownTimer=null;
 	private Stack<LinearLayout> _notificationPopups=new Stack<LinearLayout>();
+	private String sLatitude=null;
+	private String sLongitude=null;
+	private String sLocationName;
+	private boolean bNavigating;
 
 	private Logger mLogger = null;
 	private int _logFilter=3;
@@ -86,6 +90,17 @@ public class VoiceHelper extends Activity {
 			}
 		} catch (Exception e3) {}		
 		mLogger=null;
+		if(bNavigating) {
+			bNavigating=false; // no do again
+			Intent navigateIntent = new Intent(this, INeedNavigation.class)
+			.putExtra("latitude", sLatitude)
+			.putExtra("longitude", sLongitude)
+			.putExtra("name", sLocationName)
+			.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+			//bbtrythis.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+			;
+			startActivity(navigateIntent);
+		}
 	}
 	
 	@Override
@@ -184,6 +199,11 @@ public class VoiceHelper extends Activity {
 				speak(getIntent().getStringExtra("voicedata"));
 			} else {
 				_theText=getIntent().getStringExtra("voicedata");
+				sLatitude=getIntent().getStringExtra("latitude");
+				sLongitude=getIntent().getStringExtra("longitude");
+				sLocationName=getIntent().getStringExtra("laLocationName");
+				bNavigating=getIntent().getBooleanExtra("navigating",false);
+				
 		//		getLogger().log("VoiceHelper: 1b ... mTts==null || !_imInited. _theTExt="+_theText,100);
 				Intent checkIntent = new Intent();
 				checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);

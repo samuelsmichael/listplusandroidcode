@@ -4,10 +4,9 @@
 	android:layout_width="wrap_content" 
 	android:layout_height="wrap_content">
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/ScrollView01lmnop2" 
   android:layout_width="fill_parent"
-  android_padding="5sp"
+  android:padding="5sp"
   android:layout_height="fill_parent"
   android:orientation="vertical">
 
@@ -73,7 +72,7 @@
 		android:text="(Push Work With Locations)"
 	>
 	</TextView>
-	<TextView android:id="@+id/TextView01a" android:layout_width="fill_parent"
+	<TextView android:id="@+id/TextView01aA" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="Website: http://listplus.no-ip.org/mibr/intelligentreminder/default.aspx"
 		android:layout_marginTop="4sp"
 		android:layout_marginBottom="3sp"
@@ -81,7 +80,7 @@
 		android:shadowRadius="2.75" android:textAppearance="@android:style/TextAppearance.WindowTitle"
 		android:shadowColor="#BB000000">
 	</TextView>
-	<TextView android:id="@+id/TextView01a" android:layout_width="fill_parent"
+	<TextView android:id="@+id/TextView01ab" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="Google Group: http://groups.google.com/group/list-plus?hl=en"
 		android:layout_marginBottom="3sp"
 		android:textSize="6pt" android:background="@drawable/title_bar_portrait"

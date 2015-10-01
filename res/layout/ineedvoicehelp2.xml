@@ -9,92 +9,86 @@
   android:paddingRight="10dip"
   >
 	<LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
 	  android:layout_width="fill_parent"
 	  android:layout_height="wrap_content"
 	  android:orientation="horizontal"
 	  >
 		  <TextView  android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="I NEED" androidTextStyle="bold" androidTextSize="12sp"
+		  android:text="I NEED" android:textStyle="bold" android:textSize="12sp"
 		  />
 		  <TextView android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="diapers" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  android:text="diapers" android:textStyle="normal|italic" android:textSize="12sp"
 		  />
 		  <TextView android:paddingLeft="5dip"  android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="LOCATION" androidTextStyle="bold" androidTextSize="12sp"
+		  android:text="LOCATION" android:textStyle="bold" android:textSize="12sp"
 		  />
 		  <TextView android:paddingLeft="5dip"  android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="Safeway" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  android:text="Safeway" android:textStyle="normal|italic" android:textSize="12sp"
 		  />
    </LinearLayout>
 	<LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
 	  android:layout_width="fill_parent"
 	  android:layout_height="wrap_content"
 	  android:orientation="horizontal"
 	  >
 		  <TextView android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="I NEED" androidTextStyle="bold" androidTextSize="12sp" 
+		  android:text="I NEED" android:textStyle="bold" android:textSize="12sp" 
 		  />
 		  <TextView android:paddingLeft="5dip"  android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="print cartridge" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  android:text="print cartridge" android:textStyle="normal|italic" android:textSize="12sp"
 		  />
 	</LinearLayout>
 	<LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
 	  android:layout_width="fill_parent"
 	  android:layout_height="wrap_content"
 	  android:orientation="horizontal"
 	  android:paddingLeft="15dip"
 	  >
 		  <TextView  android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="DESCRIPTION" androidTextStyle="bold" androidTextSize="12sp"
+		  android:text="DESCRIPTION" android:textStyle="bold" android:textSize="12sp"
 		  /> 
 		  <TextView  android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="hp 21" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  android:text="hp 21" android:textStyle="normal|italic" android:textSize="12sp"
 		  />
 	</LinearLayout>
 	<LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
 	  android:layout_width="fill_parent"
 	  android:layout_height="wrap_content"
 	  android:orientation="horizontal"
 	  android:paddingLeft="15dip"
 	  >
 		  <TextView android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="LOCATION" androidTextStyle="bold" androidTextSize="12sp"
+		  android:text="LOCATION" android:textStyle="bold" android:textSize="12sp"
 		  />
 		  <TextView  android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="Walgreens" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  android:text="Walgreens" android:textStyle="normal|italic" android:textSize="12sp"
 		  />
 		  <TextView  android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="OR" androidTextStyle="bold" androidTextSize="12sp"
+		  android:text="OR" android:textStyle="bold" android:textSize="12sp"
 		  />
 		  <TextView  android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="OfficeMate" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  android:text="OfficeMate" android:textStyle="normal|italic" android:textSize="12sp"
 		  />
    </LinearLayout>
 	<LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
 	  android:layout_width="fill_parent"
 	  android:layout_height="wrap_content"
 	  android:orientation="horizontal"
 	  >
 		  <TextView  android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="TALK TO" androidTextStyle="bold" androidTextSize="12sp"
+		  android:text="TALK TO" android:textStyle="bold" android:textSize="12sp"
 		  />
 		  <TextView android:paddingLeft="5dip" android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="bill smith" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  android:text="bill smith" android:textStyle="normal|italic" android:textSize="12sp"
 		  />
 		  <TextView android:paddingLeft="5dip"  android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="ABOUT" androidTextStyle="bold" androidTextSize="12sp"
+		  android:text="ABOUT" android:textStyle="bold" android:textSize="12sp"
 		  />
 		  <TextView android:paddingLeft="5dip"  android:layout_width="wrap_content"  android:layout_height="wrap_content"
-		  android:text="sales" androidTextStyle="normal|italic" androidTextSize="12sp"
+		  android:text="sales" android:textStyle="normal|italic" android:textSize="12sp"
 		  />
    </LinearLayout>
 	<LinearLayout
-	  xmlns:android="http://schemas.android.com/apk/res/android"
 	  android:layout_width="fill_parent"
 	  android:layout_height="wrap_content"
 	  android:orientation="horizontal"

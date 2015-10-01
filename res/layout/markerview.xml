@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="@color/whiteish"
+    >
+
+    <TextView
+        android:id="@+id/tvCompanyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:textSize="8pt"
+        android:textStyle="bold"
+	    android:textColor="@color/grayish"
+        />
+    <TextView
+        android:id="@+id/tvLocationNameOrAddress"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:textSize="6pt"
+        android:textStyle="normal"
+	    android:textColor="@color/grayish"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:text=""
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+	    android:background="@color/grayish"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:textSize="8pt"
+        android:textStyle="bold"
+        android:text="Needs" 
+	    android:textColor="@color/grayish"
+        />
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</LinearLayout>
