@@ -20,7 +20,7 @@
 		<TextView android:text="(c) MiBr Technologies"
 			android:gravity="center_horizontal" android:layout_width="fill_parent"
 			android:textSize="10sp" android:layout_height="wrap_content"></TextView>
-		<TextView android:text="v 5.01" android:gravity="center_horizontal"
+		<TextView android:text="v 5.02" android:gravity="center_horizontal"
 			android:layout_width="fill_parent" android:textSize="12sp"
 			android:layout_height="wrap_content"></TextView>
 		<TextView android:text="Nov 04, 2013" android:gravity="center_horizontal"

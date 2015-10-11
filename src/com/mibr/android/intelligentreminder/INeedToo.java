@@ -146,7 +146,7 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 
  * 
  * */
-	public static String CURRENT_VERSION = "5.01"; // see layout_listplus.xml, as well as the manifest file and Strings
+	public static String CURRENT_VERSION = "5.02"; // see layout_listplus.xml, as well as the manifest file and Strings
 /* When TRIAL_VS_REAL*/
 	//public static String PREFERENCES_LOCATION="com.mibr.android.intelligentremindertrial_preferences";
 	public static String PREFERENCES_LOCATION="com.mibr.android.intelligentreminder_preferences";
